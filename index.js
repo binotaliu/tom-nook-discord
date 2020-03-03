@@ -97,7 +97,7 @@ const tick = () => {
 
   const todayEvents = dataBag.events
     .filter(({ date }) => (date === today.format('YYYY/M/D') || date === today.format('M/D')))
-  const todayBirthdays = dataBag.birthdays[today.format('M/D')]
+  const todayBirthdays = dataBag.birthdays[today.format('M/D')] || []
 
   const nickname = `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}`
   const activities = [...todayEvents.map(e => {
