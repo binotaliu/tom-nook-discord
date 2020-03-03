@@ -5,69 +5,95 @@ const fetchPage = require('./fetch-page').default
 
 const client = new Discord.Client()
 
-;(async () => {
+class DataBag {
+  constructor () {
+    this.events = []
+    this.birthdays = {}
+  }
 
-const events = (await fetchPage('Bot:NH_Schedules'))
-  .parse
-  .wikitext
-  .replace(/<\!--[\w\W]+?-->/g, '')
-  .split('\n')
-  .filter((line) => line.match(/^\s*\*.+?\-.+$/))
-  .map(line => line.replace(/^\s*\*/, '').trim())
-  .map((line) => { // parse lines
-    const event = {
-      date: '',
-      isFullDay: true,
-      startTime: '',
-      endTime: '',
-      message: ''
-    }
+  async updateEvents () {
+    this.events = await this.fetchEvents()
+  }
 
-    const [dateTimeStr, message] = line.split('-', 2).map(i => i.trim())
-    const [dateStr, timeStr] = dateTimeStr.split(' ', 2).map(i => i.trim())
+  async updateBirthdays () {
+    this.birthdays = await this.fetchBirthdays()
+  }
 
-    event.date = dateStr
-    event.message = message
-
-    if (timeStr) {
-      const [startTime, endTime] = timeStr.split('~', 2).map(i => i.trim())
-
-      event.isFullDay = false
-      event.startTime = startTime
-      event.endTime = endTime || startTime
-    }
-
-    return event
-  })
-
-console.log('calendar loaded:')
-console.log(...events)
-
-const birthdays = Object
-  .assign({},
-    ...((await fetchPage('Bot:NH_Birthdays'))
+  async fetchEvents () {
+    return (await fetchPage('Bot:NH_Schedules'))
       .parse
       .wikitext
       .replace(/<\!--[\w\W]+?-->/g, '')
       .split('\n')
-      .filter((line) => line.match(/^\s*\*\s*.+/))
+      .filter((line) => line.match(/^\s*\*.+?\-.+$/))
       .map(line => line.replace(/^\s*\*/, '').trim())
-      .map(line => line.split('-', 2).map(i => i.trim()))
-      .map(([date, villagers]) => ({
-        [date]: villagers.split(',')
-      })))
-  )
+      .map((line) => { // parse lines
+        const event = {
+          date: '',
+          isFullDay: true,
+          startTime: '',
+          endTime: '',
+          message: ''
+        }
+
+        const [dateTimeStr, message] = line.split('-', 2).map(i => i.trim())
+        const [dateStr, timeStr] = dateTimeStr.split(' ', 2).map(i => i.trim())
+
+        event.date = dateStr
+        event.message = message
+
+        if (timeStr) {
+          const [startTime, endTime] = timeStr.split('~', 2).map(i => i.trim())
+
+          event.isFullDay = false
+          event.startTime = startTime
+          event.endTime = endTime || startTime
+        }
+
+        return event
+      })
+  }
+
+  async fetchBirthdays () {
+    return Object
+      .assign({},
+        ...((await fetchPage('Bot:NH_Birthdays'))
+          .parse
+          .wikitext
+          .replace(/<\!--[\w\W]+?-->/g, '')
+          .split('\n')
+          .filter((line) => line.match(/^\s*\*\s*.+/))
+          .map(line => line.replace(/^\s*\*/, '').trim())
+          .map(line => line.split('-', 2).map(i => i.trim()))
+          .map(([date, villagers]) => ({
+            [date]: villagers.split(',')
+          })))
+      )
+  }
+}
+
+;(async () => {
+
+const dataBag = new DataBag
+
+await Promise.all([
+  dataBag.updateEvents(),
+  dataBag.updateBirthdays()
+])
+
+console.log('calendar loaded:')
+console.log(...dataBag.events)
 
 console.log('birthdays loaded:')
-console.log(birthdays)
+console.log(dataBag.birthdays)
 
 let tickCounter = 0
 const tick = () => {
   const today = dayjs()
 
-  const todayEvents = events
+  const todayEvents = dataBag.events
     .filter(({ date }) => (date === today.format('YYYY/M/D') || date === today.format('M/D')))
-  const todayBirthdays = birthdays[today.format('M/D')]
+  const todayBirthdays = dataBag.birthdays[today.format('M/D')]
 
   const nickname = `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}`
   const activities = [...todayEvents.map(e => {
