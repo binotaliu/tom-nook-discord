@@ -82,13 +82,13 @@ const tick = () => {
     g.me.setNickname(nickname)
   })
 
-  client.user.setActivity(`${activities[tickCounter % activities.length]} ▫️`, { type: 'PLAYING' })
+  client.user.setActivity(`${activities[tickCounter % activities.length]}`)
 
   tickCounter++
 }
 
 client.on('ready', () => {
-  client.user.setActivity('Booting...', { type: 'PLAYING' })
+  client.user.setActivity('Booting...')
 
   setInterval(() => tick(), 3000)
 })
