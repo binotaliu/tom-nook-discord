@@ -11,6 +11,13 @@ class DataBag {
     this.birthdays = {}
   }
 
+  async updateAll() {
+    return Promise.all([
+      this.updateEvents(),
+      this.updateBirthdays()
+    ])
+  }
+
   async updateEvents () {
     this.events = await this.fetchEvents()
   }
@@ -76,10 +83,7 @@ class DataBag {
 
 const dataBag = new DataBag
 
-await Promise.all([
-  dataBag.updateEvents(),
-  dataBag.updateBirthdays()
-])
+await dataBag.updateAll()
 
 console.log('calendar loaded:')
 console.log(...dataBag.events)
@@ -120,5 +124,7 @@ client.on('ready', () => {
 })
 
 client.login(`Bot ${config.token}`)
+
+setInterval(() => dataBag.updateAll(), 30000)
 })()
 
