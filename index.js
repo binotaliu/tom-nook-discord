@@ -112,7 +112,7 @@ const tick = () => {
     g.me.setNickname(nickname)
   })
 
-  client.user.setActivity(`${activities[tickCounter % activities.length]}`)
+  client.user.setActivity(`${activities[tickCounter % activities.length]}`, { type: 'STREAMING' })
 
   tickCounter++
 }
