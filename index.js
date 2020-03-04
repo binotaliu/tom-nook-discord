@@ -3,19 +3,8 @@ const dayjs = require('dayjs')
 const config = require('./config').default
 const DataBag = require('./data-bag').default
 
-const client = new Discord.Client()
-
-;(async () => {
-
 const dataBag = new DataBag
-
-await dataBag.updateAll()
-
-console.log('calendar loaded:')
-console.log(...dataBag.events)
-
-console.log('birthdays loaded:')
-console.log(dataBag.birthdays)
+const client = new Discord.Client()
 
 let tickCounter = 0
 const tick = () => {
@@ -26,31 +15,31 @@ const tick = () => {
   const todayBirthdays = dataBag.birthdays[today.format('M/D')] || []
 
   const nickname = `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}`
-  const activities = [...todayEvents.map(e => {
-    if (e.isFullDay) {
-      return `[整天] ${e.message}`
-    }
-
-    return `[${e.startTime}~${e.endTime}] ${e.message}`
-  }), ...todayBirthdays.map(b => `🎂 ${b} 生日快樂！`)]
+  const activities = [
+    ...todayEvents.map((e) => e.isFullDay ? `[整天] ${e.message}` : `[${e.startTime}~${e.endTime}] ${e.message}`),
+    ...todayBirthdays.map(b => `🎂 ${b} 生日快樂！`)
+  ]
 
   client.guilds.cache.array().forEach(g => {
     g.me.setNickname(nickname)
   })
 
-  client.user.setActivity(`${activities[tickCounter % activities.length]}`, { type: 'STREAMING' })
+  client.user.setActivity(`${activities[tickCounter % activities.length]}`, { type: 'PLAYING' })
 
   tickCounter++
 }
 
-client.on('ready', () => {
-  client.user.setActivity('Booting...')
+dataBag
+  .updateAll()
+  .then(() => client.login(`Bot ${config.token}`))
+  .then(() => {
+    setInterval(() => dataBag.updateAll(), 30000)
+    setInterval(() => tick(), 3000)
+  })
 
-  setInterval(() => tick(), 3000)
+client.on('ready', () => {
+  console.log('Booted')
+  client.user.setActivity('Booting...')
 })
 
-client.login(`Bot ${config.token}`)
-
-setInterval(() => dataBag.updateAll(), 30000)
-})()
 
