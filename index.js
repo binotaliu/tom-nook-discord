@@ -3,6 +3,8 @@ const dayjs = require('dayjs')
 const config = require('./config').default
 const DataBag = require('./data-bag').default
 
+const nicknamesMaintenance = require('./features/nicknames-maintenance').default
+
 const dataBag = new DataBag
 const client = new Discord.Client()
 
@@ -30,6 +32,7 @@ dataBag
   .updateAll()
   .then(() => client.login(`Bot ${config.token}`))
   .then(() => {
+    setInterval(() => nicknamesMaintenance(client), 30000)
     setInterval(() => dataBag.updateAll(), 30000)
     setInterval(() => tick(), 3000)
   })
