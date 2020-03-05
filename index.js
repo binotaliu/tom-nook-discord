@@ -6,7 +6,6 @@ const DataBag = require('./data-bag').default
 const dataBag = new DataBag
 const client = new Discord.Client()
 
-let tickCounter = 0
 const tick = () => {
   const today = dayjs()
 
@@ -24,9 +23,7 @@ const tick = () => {
     g.me.setNickname(nickname)
   })
 
-  client.user.setActivity(`${activities[tickCounter % activities.length]}`, { type: 'PLAYING' })
-
-  tickCounter++
+  client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
 }
 
 dataBag
