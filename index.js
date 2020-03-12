@@ -8,6 +8,8 @@ const nicknamesMaintenance = require('./features/nicknames-maintenance').default
 const dataBag = new DataBag
 const client = new Discord.Client()
 
+const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token)
+
 const tick = () => {
   const today = dayjs()
 
@@ -28,7 +30,7 @@ const tick = () => {
   if (activities.length) {
     client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
   } else {
-    client.user.setPresence({ status: 'online' })
+    client.user.setPresence({ activity: null })
   }
 }
 
@@ -72,4 +74,20 @@ client.on('guildMemberUpdate', (old, updated) => {
   }
 })
 
+client.on('message', (message) => {
+  if (message.guild) {
+    return
+  }
+
+  hook.send({
+    embeds: [{
+      author: {
+        name: `${message.author.tag}${message.author.bot ? ' [BOT]' : ''}`,
+        icon_url: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png`
+      },
+      description: message.content,
+      footer: { text: `ID: ${message.id}` }
+    }]
+  })
+})
 
