@@ -25,7 +25,11 @@ const tick = () => {
     g.me.setNickname(nickname)
   })
 
-  client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
+  if (activities.length) {
+    client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
+  } else {
+    client.user.setPresence({ status: 'online' })
+  }
 }
 
 dataBag
