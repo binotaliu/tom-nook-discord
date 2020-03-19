@@ -72,6 +72,7 @@ client.on('message', (message) => {
 
   hook.send({
     embeds: [{
+      color: message.author.id === client.user.id ? 9807270 : 15105570,
       author: {
         name: `${message.author.tag}${message.author.bot ? ' [BOT]' : ''}`,
         icon_url: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png`,
