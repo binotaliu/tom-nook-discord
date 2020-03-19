@@ -1,11 +1,11 @@
 const Discord = require('discord.js')
 const dayjs = require('dayjs')
-const config = require('./config').default
-const DataBag = require('./data-bag').default
+const config = require('./config')
+const DataBag = require('./src/data-bag')
 
 const provideRoleByNickname = require('./src/provide-role-by-nickname')
-const nicknamesMaintenance = require('./features/nicknames-maintenance').default
-const rolesConfirmation = require('./features/roles-confirmation')
+const nicknamesMaintenance = require('./src/features/nicknames-maintenance').default
+const rolesConfirmation = require('./src/features/roles-confirmation')
 
 const dataBag = new DataBag
 const client = new Discord.Client()

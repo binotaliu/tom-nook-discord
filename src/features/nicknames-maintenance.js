@@ -1,4 +1,4 @@
-exports.default = (client) => {
+module.exports = (client) => {
   client
     .guilds
     .cache

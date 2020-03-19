@@ -1,6 +1,6 @@
-const fetchPage = require('./fetch-page').default
+const fetchPage = require('./fetch-page')
 
-exports.default = class DataBag {
+module.exports = class DataBag {
   constructor () {
     this.events = []
     this.birthdays = {}
