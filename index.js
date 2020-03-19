@@ -4,7 +4,7 @@ const config = require('./config')
 const DataBag = require('./src/data-bag')
 
 const provideRoleByNickname = require('./src/provide-role-by-nickname')
-const nicknamesMaintenance = require('./src/features/nicknames-maintenance').default
+const nicknamesMaintenance = require('./src/features/nicknames-maintenance')
 const rolesConfirmation = require('./src/features/roles-confirmation')
 
 const dataBag = new DataBag
