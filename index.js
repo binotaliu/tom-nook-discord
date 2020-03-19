@@ -74,10 +74,11 @@ client.on('message', (message) => {
     embeds: [{
       author: {
         name: `${message.author.tag}${message.author.bot ? ' [BOT]' : ''}`,
-        icon_url: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png`
+        icon_url: `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png`,
+        url: `https://discordapp.com/users/${message.author.id}`
       },
       description: message.content,
-      footer: { text: `ID: ${message.id}` }
+      footer: { text: `CH ID: ${message.channel.id}` }
     }]
   })
 })
