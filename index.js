@@ -3,12 +3,16 @@ const dayjs = require('dayjs')
 const config = require('./config')
 const DataBag = require('./src/data-bag')
 
+const CommandHandler = require('./src/command-handler')
+
 const provideRoleByNickname = require('./src/provide-role-by-nickname')
 const nicknamesMaintenance = require('./src/features/nicknames-maintenance')
 const rolesConfirmation = require('./src/features/roles-confirmation')
 
 const dataBag = new DataBag
 const client = new Discord.Client()
+
+const commandHandler = new CommandHandler(client, config)
 
 const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token)
 
@@ -66,6 +70,18 @@ client.on('guildMemberUpdate', (old, updated) => {
 })
 
 client.on('message', (message) => {
+  const text = `${message.content}`.trim()
+  if (text.charAt(0) === config.prefix) {
+    try {
+      commandHandler.handle(message)
+    } catch (e) {
+      message.reply(`${e}`)
+    }
+  }
+})
+
+client.on('message', (message) => {
+  // don't forward messages in guild  (, which means only forward dm)
   if (message.guild) {
     return
   }
