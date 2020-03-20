@@ -15,6 +15,13 @@ module.exports = class CommandHandler {
   }
 
   handle(message) {
+    if (
+      !message.member ||
+      this.config.allowCommandRoles.filter(role => message.member.roles.cache.has(role)).length <= 0
+    ) {
+      return
+    }
+
     // parse command
     const text = `${message.content}`.trim()
     const [prefixedCommand, ...rawArguments] = text.split(' ')
