@@ -103,7 +103,7 @@ client.on('message', (message) => {
         url: `https://discordapp.com/users/${message.author.id}`
       },
       description: message.content,
-      footer: { text: `CH ID: ${message.channel.id} | USER ID: ${message.author.id}` }
+      footer: { text: `CH ID: ${message.channel.id} | MSG ID: ${message.id}` }
     }]
   })
 })
