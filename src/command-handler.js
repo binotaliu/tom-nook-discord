@@ -32,6 +32,11 @@ module.exports = class CommandHandler {
 
     const command = prefixedCommand.slice(this.config.prefix.length)
 
+    if (!this.commands[command]) {
+      message.reply(`不存在的指令: ${command}`)
+      return false
+    }
+
     const { argumentsCount, handler } = this.commands[command]
 
     const splitedArguments = rawArguments.map(i => i.trim()).filter(i => i)
