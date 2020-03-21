@@ -81,6 +81,14 @@ client.on('message', (message) => {
 })
 
 client.on('message', (message) => {
+  if (!message.channel.id === '546272156460384266' || !message.attachments.array().length) {
+    return
+  }
+
+  message.react('⭐')
+})
+
+client.on('message', (message) => {
   // don't forward messages in guild  (, which means only forward dm)
   if (message.guild) {
     return
