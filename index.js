@@ -81,7 +81,7 @@ client.on('message', (message) => {
 })
 
 client.on('message', (message) => {
-  if (!message.channel.id === '546272156460384266' || !message.attachments.array().length) {
+  if (message.channel.id !== '546272156460384266' || !message.attachments.array().length) {
     return
   }
 
