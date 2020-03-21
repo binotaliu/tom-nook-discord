@@ -7,7 +7,7 @@ module.exports = class CommandHandler {
     this.commands = {}
 
     commands
-      .forEach(command => command({ client, addCommand: (...v) => this.addCommand(...v) }))
+      .forEach(command => command({ config, client, addCommand: (...v) => this.addCommand(...v) }))
   }
 
   addCommand(command, handler) {
