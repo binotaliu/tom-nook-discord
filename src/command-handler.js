@@ -10,8 +10,8 @@ module.exports = class CommandHandler {
       .forEach(command => command({ client, addCommand: (...v) => this.addCommand(...v) }))
   }
 
-  addCommand(command, argumentsCount, handler) {
-    this.commands[command] = { argumentsCount, handler }
+  addCommand(command, handler) {
+    this.commands[command] = handler
   }
 
   handle(message) {
@@ -37,13 +37,14 @@ module.exports = class CommandHandler {
       return false
     }
 
-    const { argumentsCount, handler } = this.commands[command]
+    const handler = this.commands[command]
+    const argumentsCount = handler.length - 1
 
     const splitedArguments = rawArguments.map(i => i.trim()).filter(i => i)
     const parsedArguments = []
 
     for (const i in splitedArguments) {
-      if (i + 1 >= argumentsCount) {
+      if (argumentsCount && i + 1 >= argumentsCount) {
         parsedArguments.push(splitedArguments.slice(i).join(' '))
         break
       }
