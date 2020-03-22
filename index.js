@@ -6,49 +6,21 @@ const DataBag = require('./src/data-bag')
 const CommandHandler = require('./src/command-handler')
 
 const provideRoleByNickname = require('./src/provide-role-by-nickname')
-const nicknamesMaintenance = require('./src/features/nicknames-maintenance')
-const rolesConfirmation = require('./src/features/roles-confirmation')
+
+const ScheduledJobs = require('./src/scheduled-jobs/')
 
 const dataBag = new DataBag
 const client = new Discord.Client()
-
-const commandHandler = new CommandHandler(client, config)
-
 const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token)
 
-const tick = () => {
-  const today = dayjs()
+;(async () => {
 
-  const todayEvents = dataBag.events
-    .filter(({ date }) => (date === today.format('YYYY/M/D') || date === today.format('M/D')))
-  const todayBirthdays = dataBag.birthdays[today.format('M/D')] || []
+  await dataBag.updateAll()
+  await client.login(`Bot ${config.token}`)
 
-  const nickname = `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}`
-  const activities = [
-    ...todayEvents.map((e) => e.isFullDay ? `[整天] ${e.message}` : `[${e.startTime}~${e.endTime}] ${e.message}`),
-    ...todayBirthdays.map(b => `🎂 ${b} 生日快樂！`)
-  ]
-
-  client.guilds.cache.array().forEach(g => {
-    g.me.setNickname(nickname)
-  })
-
-  if (activities.length) {
-    client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
-  } else {
-    client.user.setPresence({ activity: null })
-  }
-}
-
-dataBag
-  .updateAll()
-  .then(() => client.login(`Bot ${config.token}`))
-  .then(() => {
-    setInterval(() => nicknamesMaintenance(client), 30000)
-    setInterval(() => rolesConfirmation(client), 30000)
-    setInterval(() => dataBag.updateAll(), 30000)
-    setInterval(() => tick(), 3000)
-  })
+  const commandHandler = new CommandHandler(client, config)
+  const scheduledJobs = new ScheduledJobs(client, config, dataBag)
+})()
 
 client.on('ready', () => {
   console.log('Booted')
