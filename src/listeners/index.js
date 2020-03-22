@@ -1,10 +1,12 @@
 const dmEcho = require('./dm-echo')
 const galleryAutoStar = require('./gallery-auto-star')
+const keywordsReply = require('./keywords-reply')
 const nicknameChangesWatcher = require('./nickname-changes-watcher')
 
 const listeners = [
   dmEcho,
   galleryAutoStar,
+  keywordsReply,
   nicknameChangesWatcher,
 ]
 
