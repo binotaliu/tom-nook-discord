@@ -17,6 +17,12 @@ module.exports = ({ client, addJob }) =>
                 .forEach((m) => {
                   m.setNickname(m.nickname.replace(/\s*\|\s*/, '｜'))
                 })
+              members
+                .array()
+                .filter((m) => /^\s*｜\s*/i.test(m.nickname))
+                .forEach((m) => {
+                  m.setNickname(m.nickname.replace(/\s*\｜\s*/, '｜'))
+                })
             })
       )
   )
