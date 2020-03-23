@@ -29,16 +29,17 @@ const loginAndReady = async () =>
   const commandHandler = new CommandHandler(client, config)
   const scheduledJobs = new ScheduledJobs(client, config, dataBag)
   const eventLisenters = new EventListeners(client, config, dataBag, hook)
+
+  client.on('message', (message) => {
+    const text = `${message.content}`.trim()
+    if (text.charAt(0) === config.prefix) {
+      try {
+        commandHandler.handle(message)
+      } catch (e) {
+        message.reply(`${e}`)
+      }
+    }
+  })
 })()
 
-client.on('message', (message) => {
-  const text = `${message.content}`.trim()
-  if (text.charAt(0) === config.prefix) {
-    try {
-      commandHandler.handle(message)
-    } catch (e) {
-      message.reply(`${e}`)
-    }
-  }
-})
 
