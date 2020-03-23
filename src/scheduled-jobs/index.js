@@ -18,7 +18,9 @@ module.exports = class ScheduledJobs {
     this.config = config
     this.dataBag = dataBag
 
-    this.jobs = jobs.map((job) => job({ client, config, dataBag, addJob: (time, handler) => cron.schedule(time, handler) }))
+    const addJob = (time, handler) => cron.schedule(time, handler, { timezone: 'Asia/Taipei' })
+
+    this.jobs = jobs.map((job) => job({ client, config, dataBag, addJob }))
   }
 }
 
