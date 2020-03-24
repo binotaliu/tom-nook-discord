@@ -6,6 +6,12 @@ const keywords = [
     trigger: /^因[為爲为]什[么麼]都[没沒]有[\!\.\?…！？\s]*$/gi,
     reply: ['所以什麼都要錢'],
     throttle: [2, 'minute']
+  },
+  {
+    id: '1b445e1a-7d99-48c6-967f-51f63c3c667f',
+    trigger: /^什[么麼]都[没沒]有[\!\.\?…！？\s]*$/gi,
+    reply: ['什麼都要錢'],
+    throttle: [2, 'minute']
   }
 ]
 
