@@ -1,4 +1,4 @@
-module.exports = ({ client, addJob }) =>
+module.exports = ({ client, addJob }) => [
   addJob(
     '0,30 * * * * *',
     () =>
@@ -26,4 +26,5 @@ module.exports = ({ client, addJob }) =>
             })
       )
   )
+]
 

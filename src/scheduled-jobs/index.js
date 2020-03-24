@@ -22,7 +22,8 @@ module.exports = class ScheduledJobs {
 
     const addJob = (time, handler) => cron.schedule(time, handler, { timezone: 'Asia/Taipei' })
 
-    this.jobs = jobs.map((job) => job({ client, config, dataBag, addJob }))
+    jobs
+      .forEach(job => this.jobs.push(...job({ client, config, dataBag, addJob })))
   }
 }
 

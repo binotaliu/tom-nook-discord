@@ -2,7 +2,7 @@ const epoch = 1584691200000
 
 const CH_ID = '683346217672900675'
 
-module.exports = ({ client, addJob }) =>
+module.exports = ({ client, addJob }) => [
   addJob('0 * * * * *', async () => {
     const channel = await client.channels.fetch(CH_ID)
 
@@ -10,4 +10,5 @@ module.exports = ({ client, addJob }) =>
 
     channel.setName(`還債人生 Day ${days}`)
   })
+]
 

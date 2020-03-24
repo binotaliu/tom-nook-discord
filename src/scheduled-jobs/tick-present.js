@@ -1,6 +1,6 @@
 const dayjs = require('dayjs')
 
-module.exports = ({ client, dataBag, addJob }) => {
+module.exports = ({ client, dataBag, addJob }) => [
   addJob('*/3 * * * * *', () => {
     const today = dayjs()
 
@@ -24,5 +24,5 @@ module.exports = ({ client, dataBag, addJob }) => {
       client.user.setPresence({ activity: null })
     }
   })
-}
+]
 
