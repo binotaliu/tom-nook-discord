@@ -19,6 +19,7 @@ module.exports = class ScheduledJobs {
     this.client = client
     this.config = config
     this.dataBag = dataBag
+    this.jobs = []
 
     const addJob = (time, handler) => cron.schedule(time, handler, { timezone: 'Asia/Taipei' })
 
