@@ -5,6 +5,10 @@ module.exports = ({ client, hook, addListener }) =>
       return
     }
 
+    if ((/但你設定的暱稱格式並不正確/gi).exec(message.content) && message.author.id === client.user.id) {
+      return
+    }
+
     const embeds = []
 
     const color = message.author.id === client.user.id ? 9807270 : 15105570
