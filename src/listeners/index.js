@@ -3,6 +3,7 @@ const dmEcho = require('./dm-echo')
 const galleryAutoStar = require('./gallery-auto-star')
 const keywordsReply = require('./keywords-reply')
 const nicknameChangesWatcher = require('./nickname-changes-watcher')
+const ngwords = require('./ngwords')
 
 const listeners = [
   emptyPlatformMark,
@@ -10,6 +11,7 @@ const listeners = [
   galleryAutoStar,
   keywordsReply,
   nicknameChangesWatcher,
+  ngwords
 ]
 
 module.exports = class EventListners {
