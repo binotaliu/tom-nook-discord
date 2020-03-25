@@ -1,9 +1,11 @@
+const emptyPlatformMark = require('./empty-platform-mark')
 const dmEcho = require('./dm-echo')
 const galleryAutoStar = require('./gallery-auto-star')
 const keywordsReply = require('./keywords-reply')
 const nicknameChangesWatcher = require('./nickname-changes-watcher')
 
 const listeners = [
+  emptyPlatformMark,
   dmEcho,
   galleryAutoStar,
   keywordsReply,
