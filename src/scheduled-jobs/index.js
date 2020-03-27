@@ -1,14 +1,12 @@
 const cron = require('node-cron')
 
 const daysCounter = require('./days-counter')
-const nicknamesMaintenance = require('./nicknames-maintenance')
 const rolesConfirmation = require('./roles-confirmation')
 const tickPresent = require('./tick-present')
 const turnipsReminder = require('./turnips-reminder')
 
 const jobs = [
   daysCounter,
-  nicknamesMaintenance,
   rolesConfirmation,
   tickPresent,
   turnipsReminder
