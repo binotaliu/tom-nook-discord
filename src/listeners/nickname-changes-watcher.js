@@ -13,5 +13,5 @@ module.exports = ({ addListener }) =>
     }
 
     const dmch = await updated.createDM()
-    dmch.send(`${updated.user.username} 你好！你剛才在 ${old.guild.name} 上修改了暱稱，但你設定的暱稱格式並不正確，請參考 #指南 頻道進行修改。\n https://discordapp.com/channels/546242659019390977/546258423398793217`)
+    dmch.send(`${updated.user.username} 你好！你剛才在 ${old.guild.name} 上修改了暱稱，但你設定的暱稱格式並不正確，請參考 #⚠旅人指南 頻道進行修改。\n https://discordapp.com/channels/546242659019390977/546258423398793217`)
   })
