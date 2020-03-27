@@ -13,6 +13,8 @@ const platformChannels = [
 
 const platformNameTemplate = (id) => `${id}号候車月台`
 
+const emptyMark = '｜空'
+
 module.exports = ({ addListener }) =>
   addListener('message', (message) => {
     // ignore bot message
@@ -27,8 +29,8 @@ module.exports = ({ addListener }) =>
     }
 
     const baseName = platformNameTemplate(platformNumber)
-    if (/^\+(prune|purge).*/.exec(message.content.trim()) && message.channel.name === baseName) {
-      message.channel.setName(`${baseName}｜空`)
+    if (/^\+(prune|purge).*/.exec(message.content.trim()) && (message.channel.name === baseName || message.channel.name === `${baseName}${emptyMark}`)) {
+      message.channel.setName(`${baseName}${emptyMark}`)
     } else {
       message.channel.setName(baseName)
     }
