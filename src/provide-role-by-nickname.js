@@ -7,7 +7,7 @@ const ROLES = {
 module.exports = (member) => {
   const { nickname } = member
 
-  if (Object.values(ROLES).filter(r => member.roles.has(r))) {
+  if (Object.values(ROLES).filter(r => member.roles.cache.has(r)).length) {
     return true
   }
 
