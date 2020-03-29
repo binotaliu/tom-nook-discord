@@ -14,7 +14,7 @@ module.exports = ({ client, hooks, addListener }) =>
       embeds: [{
         color: 15158332,
         title: '粗鹽偵測',
-        description: `**User:** <@${message.author.id}>\n**Channel:** <#${message.channel.name}>\n**Triggered Rule:** ${match}\n${message.content}`,
+        description: `**User:** <@${message.author.id}>\n**Channel:** <#${message.channel.id}> `[${message.channel.name}]`\n**Triggered Rule:** ${match}\n${message.content}`,
         footer: {
           text: `Message ID: ${message.id}`,
         }
