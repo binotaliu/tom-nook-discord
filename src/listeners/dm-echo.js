@@ -9,9 +9,11 @@ module.exports = ({ client, hook, addListener }) =>
       return
     }
 
+    const isSelf = message.author.id === client.user.id
+
     const embeds = []
 
-    const color = message.author.id === client.user.id ? 9807270 : 15105570
+    const color = isSelf ? 9807270 : 15105570
     const author = {
       name: `${message.author.tag}${message.author.bot ? ' [BOT]' : ''} | ${message.author.id}`,
       icon_url: message.author.avatar ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png` : `https://cdn.discordapp.com/embed/avatars/${message.author.defaultAvatarURL}.png`,
@@ -37,6 +39,6 @@ module.exports = ({ client, hook, addListener }) =>
       })))
     }
 
-    hook.send({ embeds, content: `<@${message.author.id}>` })
+    hook.send({ embeds, content: isSelf ? '' : `<@${message.author.id}>` })
   })
 
