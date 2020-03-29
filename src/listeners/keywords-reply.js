@@ -12,6 +12,24 @@ const keywords = [
     trigger: /^什[么麼]都[没沒]有[\!\.\?…！？\s]*$/gi,
     reply: ['什麼都要錢'],
     throttle: [2, 'minute']
+  },
+  {
+    id: 'b81fb0cf-f82c-4af4-963a-46d0ef23b00a',
+    trigger: /晚安/gi,
+    reply: ['晚安！', '晚安狸！', '晚安', '晚安狸'],
+    throttle: [2, 'minute']
+  },
+  {
+    id: '168b574a-275a-4780-a545-762a5eff3c03',
+    trigger: /早安/gi,
+    reply: ['早！', '早安狸！', '早安！', '早安', '早'],
+    throttle: [2, 'minute']
+  },
+  {
+    id: '7fe078fc-d967-4a22-bc0b-d13368ddc211',
+    trigger: /午安/gi,
+    reply: ['午安！', '午安狸！', '午安', '午安狸'],
+    throttle: [2, 'minute']
   }
 ]
 
