@@ -12,17 +12,17 @@ module.exports = (member) => {
   }
 
   switch (true) {
-    case /^.+?\s*[\|｜]\s*(SW\-|)0000\-0000\-0000?$/.test(nickname): // Invalid
+    case /^.+?(SW\-|)0000\-0000\-0000?$/.test(nickname): // Invalid
     default:
       return false
-    case /^.+?\s*[\|｜]\s*(\d{4}\-){2}\d{3}$/.test(nickname): // Pocket
+    case /^.+?(SW\-|)(\d{4}\-){2}\d{4}$/.test(nickname): // Switch NH
+      member.roles.add(ROLES.nh)
+      return true
+    case /^.+?(\d{4}\-){2}\d{3}$/.test(nickname): // Pocket
       member.roles.add(ROLES.pc)
       return true
-    case /^.+?\s*[\|｜]\s*(\d{4}\-){2}\d{4}$/.test(nickname): // 3DS NL
+    case /^.+?(\d{4}\-){2}\d{4}$/.test(nickname): // 3DS NL
       member.roles.add(ROLES.nl)
-      return true
-    case /^.+?\s*[\|｜]\s*(SW\-|)(\d{4}\-){2}\d{4}$/.test(nickname): // Switch NH
-      member.roles.add(ROLES.nh)
       return true
   }
 
