@@ -6,10 +6,14 @@ module.exports = ({ addListener }) =>
       return
     }
 
-    if (provideRoleByNickname(updated)) {
+    const result = provideRoleByNickname(updated)
+    if (result === true) {
+      dmch.send(`${updated.user.username} 你好！已經幫你新增了權限，請記得按照指南中的說明領取水果哦！（若領到可忽略）`)
       return
     }
 
-    const dmch = await updated.createDM()
-    dmch.send(`${updated.user.username} 你好！你剛才在 ${old.guild.name} 上修改了暱稱，但你設定的暱稱格式並不正確，請參考 #⚠旅人指南 頻道進行修改。\n https://discordapp.com/channels/546242659019390977/546258423398793217`)
+    if (result === false) {
+      const dmch = await updated.createDM()
+      dmch.send(`${updated.user.username} 你好！你剛才在 ${old.guild.name} 上修改了暱稱，但似乎未在暱稱上找到你的 FC，請參考 <#546258423398793217> 設定暱稱。`)
+    }
   })

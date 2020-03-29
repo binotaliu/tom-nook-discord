@@ -8,7 +8,7 @@ module.exports = (member) => {
   const nickname = member.nickname || member.user.username
 
   if (Object.values(ROLES).filter(r => member.roles.cache.has(r)).length) {
-    return true
+    return null
   }
 
   switch (true) {
