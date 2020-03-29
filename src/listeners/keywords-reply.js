@@ -30,6 +30,12 @@ const keywords = [
     trigger: /午安/gi,
     reply: ['午安！', '午安狸！', '午安', '午安狸'],
     throttle: [2, 'minute']
+  },
+  {
+    id: '0f505437-ee27-4efb-bd19-a978c44a8514',
+    trigger: /684078895879946242.*love/gi,
+    reply: ['<:HEART:684290314118365204>'],
+    throttle: [2, 'minute']
   }
 ]
 
