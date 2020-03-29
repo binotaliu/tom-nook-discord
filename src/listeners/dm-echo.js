@@ -1,4 +1,4 @@
-module.exports = ({ client, hook, addListener }) =>
+module.exports = ({ client, hooks, addListener }) =>
   addListener('message', (message) => {
     // don't forward messages in guild  (, which means only forward dm)
     if (message.guild) {
@@ -39,6 +39,6 @@ module.exports = ({ client, hook, addListener }) =>
       })))
     }
 
-    hook.send({ embeds, content: isSelf ? '' : `<@${message.author.id}>` })
+    hooks.inbox.send({ embeds, content: isSelf ? '' : `<@${message.author.id}>` })
   })
 

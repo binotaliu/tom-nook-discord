@@ -10,7 +10,8 @@ const EventListeners = require('./src/listeners/')
 
 const dataBag = new DataBag
 const client = new Discord.Client()
-const hook = new Discord.WebhookClient(config.webhook.id, config.webhook.token)
+const hooks = Object.assign(...Object.entries((config.webhooks || {}))
+  .map(([channel, { id, token }]) => ({ [channel]: new Discord.WebhookClient(id, token) })))
 
 const loginAndReady = async () =>
   new Promise(async (resolve) => {
@@ -31,7 +32,7 @@ const loginAndReady = async () =>
 
   const commandHandler = new CommandHandler(client, config, resolver)
   const scheduledJobs = new ScheduledJobs(client, config, dataBag)
-  const eventLisenters = new EventListeners(client, config, resolver, dataBag, hook)
+  const eventLisenters = new EventListeners(client, config, resolver, dataBag, hooks)
 
   client.on('message', (message) => {
     const text = `${message.content}`.trim()
