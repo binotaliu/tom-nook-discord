@@ -19,7 +19,7 @@ module.exports = ({ client, hooks, addListener }) =>
         color: 15158332,
         author: {
           name: '粗鹽偵測',
-          url: 'https://discordapp.com/channels/${message.guild.id}/${message.channel.id}/${message.id}',
+          url: `https://discordapp.com/channels/${message.guild.id}/${message.channel.id}/${message.id}`,
         },
         description: `**User:** <@${message.author.id}>\n**Channel:** <#${message.channel.id}> \`[${message.channel.name}]\`\n**Triggered Rule:** ${match}\n${message.content}`,
         timestamp: message.createdAt.toISOString(),
