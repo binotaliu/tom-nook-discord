@@ -2,11 +2,9 @@ const provideRoleByNickname = require('../provide-role-by-nickname')
 
 module.exports = ({ addListener }) =>
   addListener('guildMemberUpdate', async (old, updated) => {
-    if (old.nickname === updated.nickname) {
+    if (old.nickname === updated.nickname && old.user.username === old.user.username) {
       return
     }
-
-    const { nickname } = updated
 
     if (provideRoleByNickname(updated)) {
       return
