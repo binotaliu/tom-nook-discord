@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const dayjs = require('dayjs')
 const config = require('./config')
 const DataBag = require('./src/data-bag')
+const Resolver = require('./src/resolver')
 
 const CommandHandler = require('./src/command-handler')
 const ScheduledJobs = require('./src/scheduled-jobs/')
@@ -26,9 +27,11 @@ const loginAndReady = async () =>
 ;(async () => {
   await Promise.all([dataBag.updateAll(), loginAndReady()])
 
-  const commandHandler = new CommandHandler(client, config)
+  const resolver = new Resolver(client)
+
+  const commandHandler = new CommandHandler(client, config, resolver)
   const scheduledJobs = new ScheduledJobs(client, config, dataBag)
-  const eventLisenters = new EventListeners(client, config, dataBag, hook)
+  const eventLisenters = new EventListeners(client, config, resolver, dataBag, hook)
 
   client.on('message', (message) => {
     const text = `${message.content}`.trim()

@@ -1,8 +1,7 @@
-module.exports = ({ client, addCommand }) =>
+module.exports = ({ client, resolver, addCommand }) =>
   addCommand('say', async (triggerMsg, channelId, message) => {
-    client
-      .channels
-      .fetch(channelId)
+    resolver
+      .channel(channelId)
       .then((channel) => {
         channel.send(message)
       })

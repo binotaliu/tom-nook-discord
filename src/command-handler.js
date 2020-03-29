@@ -1,13 +1,14 @@
 const commands = require('./commands/')
 
 module.exports = class CommandHandler {
-  constructor(client, config) {
+  constructor(client, config, resolver) {
     this.client = client
     this.config = config
+    this.resolver = resolver
     this.commands = {}
 
     commands
-      .forEach(command => command({ config, client, addCommand: (...v) => this.addCommand(...v) }))
+      .forEach(command => command({ config, resolver, client, addCommand: (...v) => this.addCommand(...v) }))
   }
 
   addCommand(command, handler) {
