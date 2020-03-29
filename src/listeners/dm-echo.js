@@ -37,6 +37,6 @@ module.exports = ({ client, hook, addListener }) =>
       })))
     }
 
-    hook.send({ embeds })
+    hook.send({ embeds, content: `<@${message.author.id}>` })
   })
 
