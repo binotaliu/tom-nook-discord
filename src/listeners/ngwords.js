@@ -1,5 +1,15 @@
 const keywords = require('../../ngwords')
 
+const silentChannels = [
+  '684443089754128388',
+  '574674263924146206',
+  '690894152879177729',
+  '691057528234180692',
+  '691056840095826001',
+  '691643264436273193',
+  '691057408440533093',
+]
+
 module.exports = ({ client, hooks, addListener }) =>
   addListener('message', (message) => {
     if (!message.guild) {
@@ -12,7 +22,9 @@ module.exports = ({ client, hooks, addListener }) =>
       return
     }
 
-    message.channel.send('粗鹽警告，建議修改或自刪。')
+    if (!silentChannels.find(i => i === message.channel.id)) {
+      message.channel.send('粗鹽警告，建議修改或自刪。')
+    }
 
     hooks.serveillanceCentre.send({
       embeds: [{
