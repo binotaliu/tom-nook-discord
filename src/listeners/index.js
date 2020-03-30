@@ -3,6 +3,7 @@ const dmEcho = require('./dm-echo')
 const galleryAutoStar = require('./gallery-auto-star')
 const keywordsReply = require('./keywords-reply')
 const nicknameChangesWatcher = require('./nickname-changes-watcher')
+const nicknameChangeLogger = require('./nickname-change-logger')
 const ngwords = require('./ngwords')
 
 const listeners = [
@@ -11,6 +12,7 @@ const listeners = [
   galleryAutoStar,
   keywordsReply,
   nicknameChangesWatcher,
+  nicknameChangeLogger,
   ngwords
 ]
 
