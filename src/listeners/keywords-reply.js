@@ -36,6 +36,12 @@ const keywords = [
     trigger: /684078895879946242.*love/gi,
     reply: ['<:HEART:684290314118365204>'],
     throttle: [2, 'minute']
+  },
+  {
+    id: 'bf6643ad-10e9-450e-8e62-a6d0d404eb45',
+    trigger: /奸商/gi,
+    reply: ['誰？', '誰?', '你說誰是奸商?', '誰是奸商?'],
+    throttle: [2, 'minute']
   }
 ]
 
