@@ -49,6 +49,10 @@ const limiterPool = {}
 
 module.exports = ({ client, hook, addListener }) =>
   addListener('message', (message) => {
+    if (message.author.bot) {
+      return
+    }
+
     const match = keywords.find(k => k.trigger.exec(message.content))
 
     if (!match) {
