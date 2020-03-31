@@ -10,9 +10,9 @@ module.exports = class Resolver {
       return await this.client.channels.fetch(input)
     }
 
-    if (/^<.*#[!&]?(\d+)>/gi.test(input)) {
+    if (/^<#(\d+)>/gi.test(input)) {
       console.log('resolve mention')
-      const chId = input.match(/^<#&?(\d+)>/gi).slice(1).find(() => true) || null
+      const chId = input.match(/^<#(\d+)>/i).slice(1).find(() => true) || null
 
       return await this.client.channels.fetch(chId)
     }
