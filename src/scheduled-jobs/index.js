@@ -4,12 +4,14 @@ const daysCounter = require('./days-counter')
 const rolesConfirmation = require('./roles-confirmation')
 const tickPresent = require('./tick-present')
 const turnipsReminder = require('./turnips-reminder')
+const updateDataBag = require('./update-data-bag')
 
 const jobs = [
   daysCounter,
   rolesConfirmation,
   tickPresent,
-  turnipsReminder
+  turnipsReminder,
+  updateDataBag
 ]
 
 module.exports = class ScheduledJobs {
