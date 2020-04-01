@@ -5,10 +5,6 @@ module.exports = ({ client, hooks, addListener }) =>
       return
     }
 
-    if ((/但你設定的暱稱格式並不正確/gi).exec(message.content) && message.author.id === client.user.id) {
-      return
-    }
-
     const isSelf = message.author.id === client.user.id
 
     const embeds = []
@@ -39,6 +35,6 @@ module.exports = ({ client, hooks, addListener }) =>
       })))
     }
 
-    hooks.inbox.send({ embeds, content: isSelf ? '' : `<@${message.author.id}>` })
+    hooks.inbox.send({ embeds, content: isSelf ? '' : `^say <@${message.author.id}>` })
   })
 
