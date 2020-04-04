@@ -26,7 +26,7 @@ module.exports = ({ addListener }) =>
     }
 
     const baseName = platformNameTemplate(platformNumber)
-    if (/^\+(prune|purge).*/.exec(message.content.trim()) && (message.channel.name === baseName || message.channel.name === `${baseName}${emptyMark}`)) {
+    if (/^\+(prune|purge).*/i.exec(message.content.trim()) && (message.channel.name === baseName || message.channel.name === `${baseName}${emptyMark}`)) {
       message.channel.setName(`${baseName}${emptyMark}`)
     } else {
       message.channel.setName(baseName)
