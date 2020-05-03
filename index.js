@@ -13,7 +13,7 @@ const client = new Discord.Client()
 const hooks = Object.assign(...Object.entries((config.webhooks || {}))
   .map(([channel, { id, token }]) => ({ [channel]: new Discord.WebhookClient(id, token) })))
 
-const loginAndReady = async () =>
+const loginAndReady = () =>
   new Promise(async (resolve) => {
     await client.login(`Bot ${config.token}`)
 
