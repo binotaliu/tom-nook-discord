@@ -10,7 +10,7 @@ const silentChannels = [
   '691057408440533093',
 ]
 
-module.exports = ({ client, hooks, addListener }) =>
+module.exports = ({ app, addListener }) =>
   addListener('message', (message) => {
     if (!message.guild) {
       return
@@ -26,7 +26,7 @@ module.exports = ({ client, hooks, addListener }) =>
       message.channel.send('粗鹽警告，建議修改或自刪。')
     }
 
-    hooks.serveillanceCentre.send({
+    app.hooks.serveillanceCentre.send({
       embeds: [{
         color: 15158332,
         author: {
@@ -41,4 +41,3 @@ module.exports = ({ client, hooks, addListener }) =>
       }]
     })
   })
-

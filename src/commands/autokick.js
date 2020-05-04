@@ -20,7 +20,7 @@ const reasonDm = `踢除理由可能包含
 -------------------------------------
 以上被視為沒有仔細閱讀指南
 
-➥  https://discord.gg/SeXWeNe 
+➥  https://discord.gg/SeXWeNe
 
 仍然歡迎透過上方邀請連結再回到伺服器
 下回請詳讀指南並完成門檻設置`
@@ -31,7 +31,7 @@ const md5 = (data) => {
   return hash.digest('hex')
 }
 
-module.exports = ({ config, client, addCommand }) =>
+module.exports = ({ app, addCommand }) =>
   addCommand('autokick', async (triggerMsg, confirmText = '') => {
     // list members that need to be kicked
     const members = (await triggerMsg.guild.members.fetch()).array()
@@ -58,7 +58,6 @@ module.exports = ({ config, client, addCommand }) =>
         m.send(reasonDm)
       })
     } else {
-      triggerMsg.channel.send(`若確定踢除請輸入: ${config.prefix}autokick ${hash}`)
+      triggerMsg.channel.send(`若確定踢除請輸入: ${app.config.prefix}autokick ${hash}`)
     }
   })
-

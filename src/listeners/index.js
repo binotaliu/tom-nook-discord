@@ -17,15 +17,10 @@ const listeners = [
 ]
 
 module.exports = class EventListners {
-  constructor(client, config, resolver, dataBag, hooks) {
-    this.client = client
-    this.config = config
-    this.resolver = resolver
-    this.dataBag = dataBag
-    this.hooks = hooks
+  constructor(app) {
+    this.app = app
 
-    const addListener = (evnt, handler) => client.on(evnt, handler)
-    this.listeners = listeners.map(l => l({ client, config, resolver, dataBag, hooks, addListener }))
+    const addListener = (evnt, handler) => app.client.on(evnt, handler)
+    this.listeners = listeners.map(l => l({ app, addListener }))
   }
 }
-

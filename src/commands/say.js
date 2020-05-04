@@ -1,9 +1,10 @@
-module.exports = ({ client, resolver, addCommand }) =>
+module.exports = ({ addCommand }) =>
   addCommand('say', async (triggerMsg, channelId, message) => {
     channelId
       .split(',')
       .forEach(ch => {
-        resolver
+        app
+          .resolver
           .channel(ch)
           .then((channel) => {
             channel.send(message)
@@ -13,4 +14,3 @@ module.exports = ({ client, resolver, addCommand }) =>
           })
       })
   })
-

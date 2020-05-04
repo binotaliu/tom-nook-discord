@@ -1,4 +1,4 @@
-module.exports = ({ addListener, hooks }) =>
+module.exports = ({ addListener }) =>
   addListener('guildMemberUpdate', async (old, updated) => {
     if (old.nickname === updated.nickname && old.user.username === old.user.username) {
       return
@@ -32,5 +32,5 @@ module.exports = ({ addListener, hooks }) =>
       return
     }
 
-    hooks.logs.send({ content: `<@${updated.user.id}>`, embeds: [embed] })
+    app.hooks.logs.send({ content: `<@${updated.user.id}>`, embeds: [embed] })
   })

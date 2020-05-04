@@ -47,7 +47,7 @@ const keywords = [
 
 const limiterPool = {}
 
-module.exports = ({ client, hook, addListener }) =>
+module.exports = ({ addListener }) =>
   addListener('message', (message) => {
     if (message.author.bot) {
       return
@@ -77,4 +77,3 @@ module.exports = ({ client, hook, addListener }) =>
       message.channel.send(match.reply[rnd])
     })
   })
-

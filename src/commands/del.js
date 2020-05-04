@@ -1,11 +1,10 @@
 const Discord = require('discord.js')
 
-module.exports = ({ client, addCommand }) =>
+module.exports = ({ app, addCommand }) =>
   addCommand('del', async (triggerMsg, channelId, id) => {
-    const channel = await client.channels.fetch(channelId)
+    const channel = await app.client.channels.fetch(channelId)
     console.log(channel)
-    const message = await channel.messages.fetch(id)
+    const message = await app.channel.messages.fetch(id)
     console.log(message)
     message.delete()
   })
-

@@ -1,49 +1,5 @@
-const Discord = require('discord.js')
-const dayjs = require('dayjs')
+const App = require('./src/app')
 const config = require('./config')
-const DataBag = require('./src/data-bag')
-const Resolver = require('./src/resolver')
 
-const CommandHandler = require('./src/command-handler')
-const ScheduledJobs = require('./src/scheduled-jobs/')
-const EventListeners = require('./src/listeners/')
-
-const dataBag = new DataBag
-const client = new Discord.Client()
-const hooks = Object.assign(...Object.entries((config.webhooks || {}))
-  .map(([channel, { id, token }]) => ({ [channel]: new Discord.WebhookClient(id, token) })))
-
-const loginAndReady = () =>
-  new Promise(async (resolve) => {
-    await client.login(`Bot ${config.token}`)
-
-    client.on('ready', () => {
-      console.log('Booted')
-      client.user.setActivity('Booting...')
-
-      resolve()
-    })
-  })
-
-;(async () => {
-  await Promise.all([dataBag.updateAll(), loginAndReady()])
-
-  const resolver = new Resolver(client)
-
-  const commandHandler = new CommandHandler(client, config, resolver)
-  const scheduledJobs = new ScheduledJobs(client, config, dataBag)
-  const eventLisenters = new EventListeners(client, config, resolver, dataBag, hooks)
-
-  client.on('message', (message) => {
-    const text = `${message.content}`.trim()
-    if (text.charAt(0) === config.prefix) {
-      try {
-        commandHandler.handle(message)
-      } catch (e) {
-        message.reply(`${e}`)
-      }
-    }
-  })
-})()
-
-
+const app = new App(config)
+app.boot()

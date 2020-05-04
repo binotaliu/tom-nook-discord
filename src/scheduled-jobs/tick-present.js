@@ -1,12 +1,12 @@
 const dayjs = require('dayjs')
 
-module.exports = ({ client, dataBag, addJob }) => [
+module.exports = ({ app, addJob }) => [
   addJob('*/3 * * * * *', () => {
     const today = dayjs()
 
-    const todayEvents = dataBag.events
+    const todayEvents = app.dataBag.events
       .filter(({ date }) => (date === today.format('YYYY/M/D') || date === today.format('M/D')))
-    const todayBirthdays = dataBag.birthdays[today.format('M/D')] || []
+    const todayBirthdays = app.dataBag.birthdays[today.format('M/D')] || []
 
     const nickname = `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}`
     const activities = [
@@ -14,15 +14,14 @@ module.exports = ({ client, dataBag, addJob }) => [
       ...todayBirthdays.map(b => `🎂 ${b} 生日快樂！`)
     ]
 
-    client.guilds.cache.array().forEach(g => {
+    app.client.guilds.cache.array().forEach(g => {
       g.me.setNickname(nickname)
     })
 
     if (activities.length) {
-      client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
+      app.client.user.setActivity(`${activities[Math.floor(Date.now() / 3000) % activities.length]}`, { type: 'PLAYING' })
     } else {
-      client.user.setPresence({ activity: null })
+      app.client.user.setPresence({ activity: null })
     }
   })
 ]
-

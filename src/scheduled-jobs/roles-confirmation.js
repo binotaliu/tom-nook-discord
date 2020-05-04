@@ -4,11 +4,12 @@ const ROLE_ID_NL = '568701794855944223'
 const ROLE_ID_NS = '546265343459590155'
 const ROLE_ID_PC = '575562641930452992'
 
-module.exports = ({ client, addJob }) => [
+module.exports = ({ addJob }) => [
   addJob(
     '0,30 * * * * *',
     () =>
-      client
+      app
+        .client
         .guilds
         .cache
         .array()
@@ -30,4 +31,3 @@ module.exports = ({ client, addJob }) => [
         })
   )
 ]
-

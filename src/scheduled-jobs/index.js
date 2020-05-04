@@ -15,16 +15,13 @@ const jobs = [
 ]
 
 module.exports = class ScheduledJobs {
-  constructor(client, config, dataBag) {
-    this.client = client
-    this.config = config
-    this.dataBag = dataBag
+  constructor(app) {
+    this.app = app
     this.jobs = []
 
     const addJob = (time, handler) => cron.schedule(time, handler, { timezone: 'Asia/Taipei' })
 
     jobs
-      .forEach(job => this.jobs.push(...job({ client, config, dataBag, addJob })))
+      .forEach(job => this.jobs.push(...job({ app, addJob })))
   }
 }
-
