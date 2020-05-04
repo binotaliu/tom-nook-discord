@@ -1,4 +1,4 @@
-const provideRoleByNickname = require('../provide-role-by-nickname')
+const provideRoleByNickname = require('../../provide-role-by-nickname')
 
 module.exports = ({ addListener }) =>
   addListener('guildMemberUpdate', async (old, updated) => {

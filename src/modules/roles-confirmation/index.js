@@ -1,4 +1,4 @@
-const provideRoleByNickname = require('../provide-role-by-nickname')
+const provideRoleByNickname = require('../../provide-role-by-nickname')
 
 const ROLE_ID_NL = '568701794855944223'
 const ROLE_ID_NS = '546265343459590155'

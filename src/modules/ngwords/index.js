@@ -1,4 +1,4 @@
-const keywords = require('../../ngwords')
+const keywords = require('../../../ngwords')
 
 const silentChannels = [
   '684443089754128388',
