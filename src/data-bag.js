@@ -1,4 +1,6 @@
-const fetchPage = require('./fetch-page')
+const fetchPage = async (pageTitle) =>
+  (await axios.get(`https://acnh.tw/api.php?action=parse&formatversion=2&page=${pageTitle}&format=json&prop=wikitext`))
+    .data
 
 module.exports = class DataBag {
   constructor () {
@@ -73,5 +75,3 @@ module.exports = class DataBag {
       )
   }
 }
-
-
