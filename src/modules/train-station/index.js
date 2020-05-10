@@ -81,7 +81,7 @@ module.exports = async ({ app, addJob, addListener }) => {
       return
     }
 
-    const { status: originalStatus, conductor_role: conductorRole } = getFromId(message.channel.id)
+    const { emoji, conductor_role: conductorRole } = getFromId(message.channel.id)
 
     channelsManager.update(message.channel.id, {
       lastMessagedAt: message.createdAt.valueOf,
@@ -92,8 +92,10 @@ module.exports = async ({ app, addJob, addListener }) => {
       return
     }
 
-    const role = await guild.roles.fetch(conductorRole)
-    if (role.members.array().length > 0) {
+    const reactions = starBoard.reactions.cache.array()
+    const reaction = reactions.find(i => i.emoji.name === emoji)
+
+    if (reaction.count <= 1) {
       return
     }
 
