@@ -52,7 +52,7 @@ module.exports = class App {
         const allowedModules = (process.env.NOOK_MODULES || '').split(',')
         const modules = (await fsPromises.readdir(`${__dirname}/modules`))
           .filter(i => !(/^\.+/i.exec(i)))
-          .filter(i => allowedModules.length <= 0 || allowedModules.indexOf(i) >= 0)
+          .filter(i => allowedModules.length > 0 ? allowedModules.indexOf(i) >= 0 : true)
 
         modules
           .forEach(module => {
