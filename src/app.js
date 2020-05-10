@@ -49,15 +49,18 @@ module.exports = class App {
     async boot() {
         await Promise.all([this.dataBag.updateAll(), loginAndReady(this)])
 
-        const allowedModules = (process.env.NOOK_MODULES || '').split(',')
+        const allowedModules = (process.env.NOOK_MODULES || '').split(',').filter(i => i.length)
         const modules = (await fsPromises.readdir(`${__dirname}/modules`))
           .filter(i => !(/^\.+/i.exec(i)))
-          .filter(i => allowedModules.length > 0 ? allowedModules.indexOf(i) >= 0 : true)
 
         modules
           .forEach(module => {
-            console.log(`Loading module: ${module}`)
-            this.modules[module] = this.loadModule(module)
+            if (allowedModules.length <= 0 || allowedModules.findIndex(i => i === module) >= 0) {
+              console.log(`Loading module: ${module}`)
+              this.modules[module] = this.loadModule(module)
+            } else {
+              console.log(`Skipped: ${module}`)
+            }
           })
     }
 
