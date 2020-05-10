@@ -1,10 +1,8 @@
-const { splitMessage } = require('discord.js')
-
 const chunk = (arr, size) => Array.from({ length: Math.ceil(arr.length / size) }, (v, i) => arr.slice(i * size, i * size + size))
 
 module.exports = ({ addCommand }) =>
   addCommand('inrole', async (triggerMsg, role, inRawText) => {
-    const roleId = role.match(/<@\&?(\d+)>/i).slice(1).find(() => true)
+    const roleId = role.match(/<@&?(\d+)>/i).slice(1).find(() => true)
 
     console.log(roleId)
 

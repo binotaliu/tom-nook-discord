@@ -1,6 +1,6 @@
-module.exports = ({ addListener }) =>
+module.exports = ({ app, addListener }) =>
   addListener('guildMemberUpdate', async (old, updated) => {
-    if (old.nickname === updated.nickname && old.user.username === old.user.username) {
+    if (old.nickname === updated.nickname && old.user.username === updated.user.username) {
       return
     }
 

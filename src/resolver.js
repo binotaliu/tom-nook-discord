@@ -7,14 +7,14 @@ module.exports = class Resolver {
     console.log(input)
     if (/^\d+$/.test(input)) {
       console.log('resolve raw')
-      return await this.client.channels.fetch(input)
+      return this.client.channels.fetch(input)
     }
 
     if (/^<#(\d+)>/gi.test(input)) {
       console.log('resolve mention')
       const chId = input.match(/^<#(\d+)>/i).slice(1).find(() => true) || null
 
-      return await this.client.channels.fetch(chId)
+      return this.client.channels.fetch(chId)
     }
 
     if (allowDm && /^<.*@[!&]?(\d+)>/gi.test(input)) {
@@ -23,23 +23,23 @@ module.exports = class Resolver {
 
       console.log(`uid ${uid}`)
 
-      return await (await this.client.users.fetch(uid)).createDM()
+      return (await this.client.users.fetch(uid)).createDM()
     }
 
-    throw `Channel not found: ${input}`
+    throw new Error(`Channel not found: ${input}`)
   }
 
   async user (input) {
     if (/^\d+$/.test(input)) {
-      return await this.client.users.fetch(input)
+      return this.client.users.fetch(input)
     }
 
     if (/^<.*@[!&]?(\d+)>/gi.test(input)) {
       const uid = input.match(/^<.*@&?(\d+)>/gi).slice(1).find(() => true) || null
 
-      return await this.client.users.fetch(uid).createDM()
+      return this.client.users.fetch(uid).createDM()
     }
 
-    throw `Channel not found: ${input}`
+    throw new Error(`Channel not found: ${input}`)
   }
 }

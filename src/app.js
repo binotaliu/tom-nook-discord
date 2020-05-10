@@ -6,8 +6,8 @@ const DataBag = require('./data-bag')
 const Resolver = require('./resolver')
 
 const loginAndReady = (app) =>
-  new Promise(async (resolve) => {
-    await app.client.login(`Bot ${app.config.token}`)
+  new Promise((resolve) => {
+    app.client.login(`Bot ${app.config.token}`)
 
     app.client.on('ready', () => {
       console.log('Booted')
@@ -68,7 +68,7 @@ module.exports = class App {
     const module = require(`./modules/${name}`)
     return module({
       app: this,
-      addCommand: (command, handler) => this.commands[command] = handler,
+      addCommand: (command, handler) => { this.commands[command] = handler },
       addJob: (time, handler) => cron.schedule(time, handler, { timezone: 'Asia/Taipei' }),
       addListener: (evnt, handler) => this.client.on(evnt, handler)
     })
@@ -113,7 +113,7 @@ module.exports = class App {
     }
 
     if (parsedArguments.length !== argumentsCount) {
-      throw `Arguments count does not match. Required ${argumentsCount}, given ${parsedArguments.length}`
+      throw new Error(`Arguments count does not match. Required ${argumentsCount}, given ${parsedArguments.length}`)
     }
 
     return handler(message, ...parsedArguments)

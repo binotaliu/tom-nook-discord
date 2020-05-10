@@ -3,13 +3,13 @@ const { RateLimiter } = require('limiter')
 const keywords = [
   {
     id: '04a9493f-3a1d-4a50-a701-1dad7c037de4',
-    trigger: /^因[為爲为]什[么麼]都[没沒]有[\!\.\?…！？\s]*$/gi,
+    trigger: /^因[為爲为]什[么麼]都[没沒]有[!.?…！？\s]*$/gi,
     reply: ['所以什麼都要錢'],
     throttle: [2, 'minute']
   },
   {
     id: '1b445e1a-7d99-48c6-967f-51f63c3c667f',
-    trigger: /^什[么麼]都[没沒]有[\!\.\?…！？\s]*$/gi,
+    trigger: /^什[么麼]都[没沒]有[!.?…！？\s]*$/gi,
     reply: ['什麼都要錢'],
     throttle: [2, 'minute']
   },
@@ -67,7 +67,7 @@ module.exports = ({ addListener }) =>
     const limiter = limiterPool[limiterId]
 
     limiter.removeTokens(1, (err, remaining) => {
-      if (remaining <= 0) {
+      if (err || remaining <= 0) {
         return
       }
 

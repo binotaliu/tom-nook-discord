@@ -15,7 +15,7 @@ module.exports = (member) => {
     case /^.+?(SW\D|)0000\D?0000\D?0000?$/.test(nickname): // Invalid
     default:
       return false
-    case /^.+?(SW\-|)(\d{4}\D?){2}\d{4}$/.test(nickname): // Switch NH
+    case /^.+?(SW-|)(\d{4}\D?){2}\d{4}$/.test(nickname): // Switch NH
       member.roles.add(ROLES.nh)
       return true
     case /^.+?(\d{4}\D?){2}\d{3}$/.test(nickname): // Pocket
@@ -25,6 +25,4 @@ module.exports = (member) => {
       member.roles.add(ROLES.nl)
       return true
   }
-
-  return false
 }

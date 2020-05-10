@@ -11,7 +11,7 @@ const allowedRoles = [
   '575562641930452992' // 口袋
 ]
 
-const nicknameFormat = /^.*｜(SW\-(\d{4}\-){2}\d{4}|(\d{4}-){2}\d{3}\d?)$/gi
+const nicknameFormat = /^.*｜(SW-(\d{4}-){2}\d{4}|(\d{4}-){2}\d{3}\d?)$/gi
 
 const reasonDm = `踢除理由可能包含
 -------------------------------------

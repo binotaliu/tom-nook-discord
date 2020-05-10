@@ -2,7 +2,7 @@ const epoch = 1584691200000
 
 const CH_ID = '683346217672900675'
 
-module.exports = ({ addJob }) => [
+module.exports = ({ app, addJob }) => [
   addJob('0 0 0 * * *', async () => {
     const channel = await app.client.channels.fetch(CH_ID)
 

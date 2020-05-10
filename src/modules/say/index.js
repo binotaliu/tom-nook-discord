@@ -1,4 +1,4 @@
-module.exports = ({ addCommand }) =>
+module.exports = ({ app, addCommand }) =>
   addCommand('say', async (triggerMsg, channelId, message) => {
     channelId
       .split(',')

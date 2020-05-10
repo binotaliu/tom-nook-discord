@@ -29,9 +29,9 @@ module.exports = class DataBag {
     return (await fetchPage('Bot:NH_Schedules'))
       .parse
       .wikitext
-      .replace(/<\!--[\w\W]+?-->/g, '')
+      .replace(/<!--[\w\W]+?-->/g, '')
       .split('\n')
-      .filter((line) => line.match(/^\s*\*.+?\-.+$/))
+      .filter((line) => line.match(/^\s*\*.+?-.+$/))
       .map(line => line.replace(/^\s*\*/, '').trim())
       .map((line) => { // parse lines
         const event = {
@@ -66,7 +66,7 @@ module.exports = class DataBag {
         ...((await fetchPage('Bot:NH_Birthdays'))
           .parse
           .wikitext
-          .replace(/<\!--[\w\W]+?-->/g, '')
+          .replace(/<!--[\w\W]+?-->/g, '')
           .split('\n')
           .filter((line) => line.match(/^\s*\*\s*.+/))
           .map(line => line.replace(/^\s*\*/, '').trim())

@@ -81,7 +81,7 @@ module.exports = async ({ app, addJob, addListener }) => {
       return
     }
 
-    const { emoji, conductor_role: conductorRole } = getFromId(message.channel.id)
+    const { emoji } = getFromId(message.channel.id)
     const { status: originalStatus } = channelsManager.get(message.channel.id) || { status: null }
 
     channelsManager.update(message.channel.id, {
