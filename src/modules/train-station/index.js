@@ -82,21 +82,21 @@ module.exports = async ({ app, addJob, addListener }) => {
     }
 
     const { emoji, conductor_role: conductorRole } = getFromId(message.channel.id)
-    const { status: originalStatus } = channelsManager.get(message.channel.id)
+    const { status: originalStatus } = channelsManager.get(message.channel.id) || { status: null }
 
     channelsManager.update(message.channel.id, {
       lastMessagedAt: message.createdAt.valueOf,
       status: CHANNEL_STATUSES.ACTIVE
     })
 
-    if (originalStatus !== CHANNEL_STATUSES.EMPTY) {
+    if (originalStatus !== CHANNEL_STATUSES.EMPTY && originalStatus !== null) {
       return
     }
 
     const reactions = starBoard.reactions.cache.array()
     const reaction = reactions.find(i => i.emoji.name === emoji)
 
-    if (reaction.count <= 1) {
+    if (reaction.count > 1) {
       return
     }
 
