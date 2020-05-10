@@ -49,10 +49,14 @@ module.exports = class App {
     async boot() {
         await Promise.all([this.dataBag.updateAll(), loginAndReady(this)])
 
-        const modules = (await fsPromises.readdir(`${__dirname}/modules`)).filter(i => !(/^\.+/i.exec(i)))
+        const allowedModules = (process.env.NOOK_MODULES || '').split(',')
+        const modules = (await fsPromises.readdir(`${__dirname}/modules`))
+          .filter(i => !(/^\.+/i.exec(i)))
+          .filter(i => allowedModules.length <= 0 || allowedModules.indexOf(i) >= 0)
+
         modules
           .forEach(module => {
-            console.log(`Module loaded: ${module}`)
+            console.log(`Loading module: ${module}`)
             this.modules[module] = this.loadModule(module)
           })
     }
@@ -60,7 +64,7 @@ module.exports = class App {
     loadModule(name) {
       const module = require(`./modules/${name}`)
       return module({
-        app: this.app,
+        app: this,
         addCommand: (command, handler) => this.commands[command] = handler,
         addJob: (time, handler) => cron.schedule(time, handler, { timezone: 'Asia/Taipei' }),
         addListener: (evnt, handler) => this.client.on(evnt, handler)
