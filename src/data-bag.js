@@ -10,7 +10,7 @@ module.exports = class DataBag {
     this.birthdays = {}
   }
 
-  async updateAll() {
+  async updateAll () {
     return Promise.all([
       this.updateEvents(),
       this.updateBirthdays()

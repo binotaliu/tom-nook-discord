@@ -2,12 +2,12 @@ const CHANNEL_STATUSES = require('./channel-statuses')
 const { getNameById } = require('./platforms')
 
 module.exports = class ChannelsManager {
-  constructor(guild) {
+  constructor (guild) {
     this.channels = {}
     this.guild = guild
   }
 
-  update(id, { lastMessagedAt, status }) {
+  update (id, { lastMessagedAt, status }) {
     if (!this.channels[id]) {
       this.channels[id] = {}
     }
@@ -19,7 +19,7 @@ module.exports = class ChannelsManager {
     channel.setName(getNameById(id, status === CHANNEL_STATUSES.EMPTY))
   }
 
-  get(id = null) {
+  get (id = null) {
     if (!id) {
       return this.channels
     }

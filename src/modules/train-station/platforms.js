@@ -1,4 +1,4 @@
-const nameTemplate = (id, empty = false) => `${id}号候車月台${empty ? '｜空'  : ''}`
+const nameTemplate = (id, empty = false) => `${id}号候車月台${empty ? '｜空' : ''}`
 
 const platforms = [
   {
@@ -68,11 +68,11 @@ const empty = { id: null, number: null, emoji: null }
 const isPlatform = (id) => platforms.findIndex(i => i.id === id) >= 0
 
 const getPlatformId = (number) => (platforms.find(i => i.number === number) || {}).id || null
-const getPlatformNumber = (id) => (platforms.find(i => i.id === id) || {}).number || null 
+const getPlatformNumber = (id) => (platforms.find(i => i.id === id) || {}).number || null
 
-const getFromEmoji = (emoji) => platforms.find(i => i.emoji === emoji) || empty 
-const getFromNumber = (number) => platforms.find(i => i.number === number) || empty 
-const getFromId = (id) => platforms.find(i => i.id === id) || empty 
+const getFromEmoji = (emoji) => platforms.find(i => i.emoji === emoji) || empty
+const getFromNumber = (number) => platforms.find(i => i.number === number) || empty
+const getFromId = (id) => platforms.find(i => i.id === id) || empty
 
 const getNameById = (id, isEmpty = false) => nameTemplate(getPlatformNumber(id), isEmpty)
 const getNameByNumber = (number, isEmpty = false) => nameTemplate(number, isEmpty)

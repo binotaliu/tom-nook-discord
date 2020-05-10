@@ -22,7 +22,7 @@ module.exports = ({ app, addListener }) =>
         color,
         author,
         description: message.content,
-        footer,
+        footer
       })
     }
 
@@ -31,7 +31,7 @@ module.exports = ({ app, addListener }) =>
         color,
         author,
         image: { url },
-        footer,
+        footer
       })))
     }
 

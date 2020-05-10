@@ -1,9 +1,9 @@
 module.exports = class Resolver {
-  constructor(client) {
+  constructor (client) {
     this.client = client
   }
 
-  async channel(input, allowDm = true) {
+  async channel (input, allowDm = true) {
     console.log(input)
     if (/^\d+$/.test(input)) {
       console.log('resolve raw')
@@ -29,7 +29,7 @@ module.exports = class Resolver {
     throw `Channel not found: ${input}`
   }
 
-  async user(input) {
+  async user (input) {
     if (/^\d+$/.test(input)) {
       return await this.client.users.fetch(input)
     }
@@ -43,4 +43,3 @@ module.exports = class Resolver {
     throw `Channel not found: ${input}`
   }
 }
-

@@ -1,4 +1,3 @@
 // your ngwords here, use regular expression.
 
-module.exports =  []
-
+module.exports = []

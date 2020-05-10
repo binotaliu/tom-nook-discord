@@ -8,7 +8,7 @@ const allowedRoles = [
   '683253104879206435', // 毫無反應
   '568701794855944223', // 村長
   '546265343459590155', // 島主
-  '575562641930452992', // 口袋
+  '575562641930452992' // 口袋
 ]
 
 const nicknameFormat = /^.*｜(SW\-(\d{4}\-){2}\d{4}|(\d{4}-){2}\d{3}\d?)$/gi
@@ -36,14 +36,13 @@ module.exports = ({ app, addCommand }) =>
     // list members that need to be kicked
     const members = (await triggerMsg.guild.members.fetch()).array()
 
-
     const expires = dayjs().subtract(1, 'month')
 
     const kickList = members
       .filter((m) => m.joinedAt.valueOf() <= expires.valueOf())
       .filter((m) => !(m.nickname || '').match(nicknameFormat) || allowedRoles.filter(i => m.roles.cache.has(i)).length <= 0)
 
-    const listMessages = splitMessage(`踢除名單如下：\n${kickList.map(i => `<@${i.id}>`).join('\n')}\n設定期限: ${expires.format('YYYY-MM-DD HH:mm:ss')}`);
+    const listMessages = splitMessage(`踢除名單如下：\n${kickList.map(i => `<@${i.id}>`).join('\n')}\n設定期限: ${expires.format('YYYY-MM-DD HH:mm:ss')}`)
     for (const msg of listMessages) {
       triggerMsg.channel.send(msg)
     }
@@ -54,7 +53,7 @@ module.exports = ({ app, addCommand }) =>
     // if confirm text given, check hash and perform kick
     if (confirmText === hash) {
       kickList.forEach(m => {
-        m.kick(`未設定符合規定的暱稱`)
+        m.kick('未設定符合規定的暱稱')
         m.send(reasonDm)
       })
     } else {

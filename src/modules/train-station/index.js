@@ -13,7 +13,7 @@ module.exports = async ({ app, addJob, addListener }) => {
 
   const channelsManager = new ChannelsManager(guild)
 
-  const starBoard = await  guild
+  const starBoard = await guild
     .channels.cache.get(starBoardId.channel)
     .messages
     .fetch(starBoardId.message)
@@ -46,7 +46,7 @@ module.exports = async ({ app, addJob, addListener }) => {
       .filter(([, { lastMessagedAt }]) => lastMessagedAt <= warnTime)
       .map(([id, { lastMessagedAt, status }]) => ({ id, lastMessagedAt, status }))
 
-    expiredChannels.forEach(({ id, lastMessagedAt , status }) => {
+    expiredChannels.forEach(({ id, lastMessagedAt, status }) => {
       const channel = getChannel(id)
 
       if (status === CHANNEL_STATUSES.ACTIVE) {
