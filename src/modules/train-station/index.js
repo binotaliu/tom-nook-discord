@@ -10,6 +10,7 @@ const starBoardId = {
 
 module.exports = async ({ app, addJob, addListener }) => {
   const guild = app.client.guilds.cache.get(starBoardId.guild)
+  const getChannel = (id) => guild.channels.get(id)
 
   const channelsManager = new ChannelsManager(guild)
 
@@ -18,24 +19,30 @@ module.exports = async ({ app, addJob, addListener }) => {
     .messages
     .fetch(starBoardId.message)
 
-  const starBoardCollector = starBoard
-    .createReactionCollector(() => true, { dispose: true })
+  const createCollector = () => {
+    const starBoardCollector = starBoard
+      .createReactionCollector(() => true, { dispose: true })
 
-  const getChannel = (id) => guild.channels.get(id)
+    starBoardCollector.on('collect', (reaction) => {
+      const { id } = getFromEmoji(reaction.emoji.name)
+      id && channelsManager.update(id, { status: CHANNEL_STATUSES.ACTIVE })
+    })
 
-  starBoardCollector.on('collect', (reaction) => {
-    const { id } = getFromEmoji(reaction.emoji.name)
-    id && channelsManager.update(id, { status: CHANNEL_STATUSES.ACTIVE })
-  })
+    starBoardCollector.on('remove', (reaction) => {
+      if (reaction.users.cache.array().length > 2) {
+        return
+      }
 
-  starBoardCollector.on('remove', (reaction) => {
-    if (reaction.users.cache.array().length > 2) {
-      return
-    }
+      const { id } = getFromEmoji(reaction.emoji.name)
+      id && channelsManager.update(id, { status: CHANNEL_STATUSES.EMPTY })
+    })
 
-    const { id } = getFromEmoji(reaction.emoji.name)
-    id && channelsManager.update(id, { status: CHANNEL_STATUSES.EMPTY })
-  })
+    starBoardCollector.on('end', () => {
+      createCollector()
+    })
+  }
+
+  createCollector()
 
   addJob('* * * * * *', () => {
     const warnTime = Date.now() - (1000 * 60 * 25)
