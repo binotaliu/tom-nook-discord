@@ -10,10 +10,14 @@ module.exports = ({ app, addListener }) =>
     const embeds = []
 
     const color = isSelf ? 9807270 : 15105570
+
+    const sender = message.author
+    const recipient = message.channel.recipient
+
     const author = {
-      name: `${message.author.tag}${message.author.bot ? ' [BOT]' : ''} | ${message.author.id}`,
-      icon_url: message.author.avatar ? `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.png` : message.author.defaultAvatarURL,
-      url: `https://discordapp.com/users/${message.author.id}`
+      name: `${sender.tag}${sender.id === recipient.id ? '' : ` ➤ ${recipient.tag}`}`,
+      icon_url: message.author.avatar ? `https://cdn.discordapp.com/avatars/${sender.id}/${sender.avatar}.png` : sender.defaultAvatarURL,
+      url: `https://discordapp.com/users/${sender.id}`
     }
     const footer = { text: `CH ID: ${message.channel.id} | MSG ID: ${message.id}` }
 
