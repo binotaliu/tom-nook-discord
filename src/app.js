@@ -28,7 +28,7 @@ module.exports = class App {
       const text = `${message.content}`.trim()
       if (text.slice(0, this.config.prefix.length) !== this.config.prefix) {
         try {
-          this.messageHandler(message)
+          this.commandHandler(message)
         } catch (e) {
           message.reply(`${e}`)
         }
@@ -74,11 +74,7 @@ module.exports = class App {
     })
   }
 
-  messageHandler (message) {
-    if (text.slice(0, this.config.prefix.length) !== this.config.prefix) {
-      return false
-    }
-
+  commandHandler (message) {
     if (
       !message.member ||
         this.config.allowCommandRoles.filter(role => message.member.roles.cache.has(role)).length <= 0
