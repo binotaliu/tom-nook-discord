@@ -26,7 +26,7 @@ module.exports = class App {
     // binding for message handler
     this.client.on('message', (message) => {
       const text = `${message.content}`.trim()
-      if (text.charAt(0) === this.config.prefix) {
+      if (text.slice(0, this.config.prefix.length) !== this.config.prefix) {
         try {
           this.messageHandler(message)
         } catch (e) {
@@ -75,6 +75,10 @@ module.exports = class App {
   }
 
   messageHandler (message) {
+    if (text.slice(0, this.config.prefix.length) !== this.config.prefix) {
+      return false
+    }
+
     if (
       !message.member ||
         this.config.allowCommandRoles.filter(role => message.member.roles.cache.has(role)).length <= 0
@@ -85,10 +89,6 @@ module.exports = class App {
     // parse command
     const text = `${message.content}`.trim()
     const [prefixedCommand, ...rawArguments] = text.split(' ')
-
-    if (text.slice(0, this.config.prefix.length) !== this.config.prefix) {
-      return false
-    }
 
     const command = prefixedCommand.slice(this.config.prefix.length)
 
