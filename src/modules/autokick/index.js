@@ -11,16 +11,14 @@ const allowedRoles = [
   '575562641930452992' // 口袋
 ]
 
-const nicknameFormat = /^.*｜(SW-(\d{4}-){2}\d{4}|(\d{4}-){2}\d{3}\d?)$/gi
-
 const reasonDm = `踢除理由可能包含
 -------------------------------------
-❶ 長久未設置群暱稱FC
+❶ 從未設置群暱稱FC
 ❷ 長久未領取對應身份組權限
 -------------------------------------
 以上被視為沒有仔細閱讀指南
 
-➥  https://discord.gg/SeXWeNe
+➥  https://discord.gg/FaQE6aq
 
 仍然歡迎透過上方邀請連結再回到伺服器
 下回請詳讀指南並完成門檻設置`
@@ -40,7 +38,7 @@ module.exports = ({ app, addCommand }) =>
 
     const kickList = members
       .filter((m) => m.joinedAt.valueOf() <= expires.valueOf())
-      .filter((m) => !(m.nickname || '').match(nicknameFormat) || allowedRoles.filter(i => m.roles.cache.has(i)).length <= 0)
+      .filter((m) => allowedRoles.filter(i => m.roles.cache.has(i)).length <= 0)
 
     const listMessages = splitMessage(`踢除名單如下：\n${kickList.map(i => `<@${i.id}>`).join('\n')}\n設定期限: ${expires.format('YYYY-MM-DD HH:mm:ss')}`)
     for (const msg of listMessages) {
