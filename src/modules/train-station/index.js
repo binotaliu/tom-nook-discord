@@ -25,7 +25,7 @@ module.exports = async ({ app, addJob, addListener }) => {
 
     starBoardCollector.on('collect', (reaction) => {
       const { id } = getFromEmoji(reaction.emoji.name)
-      id && channelsManager.update(id, { status: CHANNEL_STATUSES.ACTIVE })
+      id && channelsManager.update(id, { lastMessagedAt: Date.now(), status: CHANNEL_STATUSES.ACTIVE })
     })
 
     starBoardCollector.on('remove', (reaction) => {
@@ -34,7 +34,7 @@ module.exports = async ({ app, addJob, addListener }) => {
       }
 
       const { id } = getFromEmoji(reaction.emoji.name)
-      id && channelsManager.update(id, { status: CHANNEL_STATUSES.EMPTY })
+      id && channelsManager.update(id, { lastMessagedAt: Date.now(), status: CHANNEL_STATUSES.EMPTY })
     })
 
     starBoardCollector.on('end', () => {
