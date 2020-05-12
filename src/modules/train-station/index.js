@@ -10,7 +10,7 @@ const starBoardId = {
 
 module.exports = async ({ app, addJob, addListener }) => {
   const guild = app.client.guilds.cache.get(starBoardId.guild)
-  const getChannel = (id) => guild.channels.get(id)
+  const getChannel = (id) => guild.channels.resolve(id)
 
   const channelsManager = new ChannelsManager(guild)
 
