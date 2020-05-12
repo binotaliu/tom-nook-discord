@@ -66,6 +66,7 @@ module.exports = async ({ app, addJob, addListener }) => {
             break
           }
 
+          channel.send('===========')
           channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.EMPTY })
 
           const { emoji } = getFromId(id)
