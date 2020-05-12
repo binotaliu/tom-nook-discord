@@ -60,10 +60,10 @@ module.exports = async ({ app, addJob, addListener }) => {
         case CHANNEL_STATUSES.ACTIVE:
           channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.WARNED })
           channel.send('該月台已閒置超過 25 分鐘，若五分鐘內未有任何新訊息將標示為空月台。')
-          break;
-        case CHANNEL_STATUSES.WARNED:
+          break
+        case CHANNEL_STATUSES.WARNED: {
           if (lastMessagedAt > expireTime) {
-            break;
+            break
           }
 
           channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.EMPTY })
@@ -80,7 +80,8 @@ module.exports = async ({ app, addJob, addListener }) => {
           users.forEach((user) => {
             reaction.users.remove(user.id)
           })
-          break;
+          break
+        }
       }
     })
   })

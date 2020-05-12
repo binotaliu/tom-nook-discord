@@ -9,7 +9,7 @@ module.exports = class ChannelsManager {
     this._fetchInfo()
   }
 
-  async _fetchInfo() {
+  async _fetchInfo () {
     const ids = platforms.map(i => i.id)
 
     for (const id of ids) {
