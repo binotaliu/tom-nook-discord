@@ -56,24 +56,31 @@ module.exports = async ({ app, addJob, addListener }) => {
     expiredChannels.forEach(({ id, lastMessagedAt, status }) => {
       const channel = getChannel(id)
 
-      if (status === CHANNEL_STATUSES.ACTIVE) {
-        channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.WARNED })
-        channel.send('該月台已閒置超過 25 分鐘，若五分鐘內未有任何新訊息將標示為空月台。')
-      } else if (lastMessagedAt <= expireTime && status === CHANNEL_STATUSES.WARNED) {
-        channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.EMPTY })
+      switch (status) {
+        case CHANNEL_STATUSES.ACTIVE:
+          channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.WARNED })
+          channel.send('該月台已閒置超過 25 分鐘，若五分鐘內未有任何新訊息將標示為空月台。')
+          break;
+        case CHANNEL_STATUSES.WARNED:
+          if (lastMessagedAt > expireTime) {
+            break;
+          }
 
-        const { emoji } = getFromId(id)
+          channelsManager.update(id, { lastMessagedAt, status: CHANNEL_STATUSES.EMPTY })
 
-        const reactions = starBoard.reactions.cache.array()
-        const reaction = reactions.find(i => i.emoji.name === emoji)
-        if (!reaction) {
-          return
-        }
+          const { emoji } = getFromId(id)
 
-        const users = reaction.users.cache.array().filter(i => !i.bot)
-        users.forEach((user) => {
-          reaction.users.remove(user.id)
-        })
+          const reactions = starBoard.reactions.cache.array()
+          const reaction = reactions.find(i => i.emoji.name === emoji)
+          if (!reaction) {
+            return
+          }
+
+          const users = reaction.users.cache.array().filter(i => !i.bot)
+          users.forEach((user) => {
+            reaction.users.remove(user.id)
+          })
+          break;
       }
     })
   })
@@ -92,7 +99,7 @@ module.exports = async ({ app, addJob, addListener }) => {
     const { status: originalStatus } = channelsManager.get(message.channel.id) || { status: null }
 
     channelsManager.update(message.channel.id, {
-      lastMessagedAt: message.createdAt.valueOf,
+      lastMessagedAt: message.createdAt.valueOf(),
       status: CHANNEL_STATUSES.ACTIVE
     })
 
