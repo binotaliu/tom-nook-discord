@@ -23,7 +23,7 @@ module.exports = ({ app, addListener, addJob }) => {
     }
   })
 
-  addJob('0,30 * * * * *', () => {
+  addJob('0,30 * * * * *', async () => {
     const guilds = app.client.guilds.cache.array()
 
     for (const guild of guilds) {
