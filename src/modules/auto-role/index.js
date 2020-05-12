@@ -27,19 +27,19 @@ module.exports = ({ app, addListener, addJob }) => {
     const guilds = app.client.guilds.cache.array()
 
     for (const guild of guilds) {
-        const members = await guild.members.fetch()
+      const members = await guild.members.fetch()
 
-        for (const member of members) {
-            if (
-              member.roles.cache.has(ROLE_ID_NL) ||
+      for (const member of members) {
+        if (
+          member.roles.cache.has(ROLE_ID_NL) ||
               member.roles.cache.has(ROLE_ID_NS) ||
               member.roles.cache.has(ROLE_ID_PC)
-            ) {
-              continue
-            }
-
-            provideRoleByNickname(member)
+        ) {
+          continue
         }
+
+        provideRoleByNickname(member)
+      }
     }
   })
 }
