@@ -1,5 +1,11 @@
-module.exports = ({ app, addCommand }) =>
-  addCommand('say', async (triggerMsg, _, channelId, message) => {
+module.exports = ({ app, addCommand }) => {
+  addCommand('del', async (triggerMsg, channelId, id) => {
+    const channel = await app.resolver.channel(channelId)
+    const message = await channel.messages.fetch(id)
+    message.delete()
+  })
+
+  addCommand('say', async (triggerMsg, channelId, message) => {
     channelId
       .split(',')
       .forEach(ch => {
@@ -20,3 +26,5 @@ module.exports = ({ app, addCommand }) =>
           })
       })
   })
+}
+
