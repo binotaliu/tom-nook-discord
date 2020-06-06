@@ -18,10 +18,10 @@ npm install
 
 Copy `config.example.js` to `config.js` and fill in your webhook url and bot token.
 
-Copy `ngwords.example.js` to `ngwords.js` and set up your own ngwords.
-(You can find a example [here](https://gist.github.com/binotaliu/a52715ba0567ee242afc53873e7d128c))
+Copy `ngwords.example.js` to `ngwords.js` and set up your own ngwords.  
+(You can find an example [here](https://gist.github.com/binotaliu/a52715ba0567ee242afc53873e7d128c).)
 
 ## License
 
-All the source code in this repository are released under GPLv3. You can find a full copy of license text in [LICENSE](LICENSE).
+All the source code in this repository are released under AGPL-3.0. You can find a full copy of license text in [LICENSE](LICENSE).
 
