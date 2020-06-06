@@ -1,9 +1,19 @@
 module.exports = {
   token: '',
   prefix: '@',
-  webhook: {
-    id: '',
-    token: ''
+  webhooks: {
+    inbox: {
+      id: '',
+      token: ''
+    },
+    serveillanceCentre: {
+      id: '',
+      token: ''
+    },
+    logs: {
+      id: '',
+      token: ''
+    }
   },
   allowCommandRoles: [] // snowflake[]
 }
