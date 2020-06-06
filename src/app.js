@@ -114,7 +114,7 @@ module.exports = class App {
         {},
         ...Object
           .entries(parsed)
-          .filter((k) => k !== '_')
+          .filter(([k]) => k !== '_')
           .map(([k, v]) => ({ [k]: stripQuotes(v) }))
       )
 
