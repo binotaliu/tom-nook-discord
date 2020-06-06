@@ -1,5 +1,5 @@
 module.exports = ({ app, addCommand }) =>
-  addCommand('say', async (triggerMsg, channelId, message) => {
+  addCommand('say', async (triggerMsg, _, channelId, message) => {
     channelId
       .split(',')
       .forEach(ch => {

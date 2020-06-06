@@ -30,7 +30,7 @@ const md5 = (data) => {
 }
 
 module.exports = ({ app, addCommand }) =>
-  addCommand('autokick', async (triggerMsg, confirmText = '') => {
+  addCommand('autokick', async (triggerMsg, _, confirmText = '') => {
     // list members that need to be kicked
     const members = (await triggerMsg.guild.members.fetch()).array()
 
