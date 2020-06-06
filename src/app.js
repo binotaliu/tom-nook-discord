@@ -12,7 +12,7 @@ const stripQuotes = (str) => {
   }
 
   const firstChar = str.charAt(0)
-  const lastChar = str.charAt(-1)
+  const lastChar = str.charAt(str.length - 1)
 
   // if not surrounded by quotes
   if (firstChar !== lastChar || (firstChar !== '"' && firstChar !== "'")) {
