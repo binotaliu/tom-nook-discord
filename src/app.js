@@ -107,7 +107,7 @@ module.exports = class App {
     }
 
     const handler = this.commands[command]
-    const requiredArguments = Math.min(handler.length - 2, 0) // include namedArguments, so, - 2
+    const requiredArguments = Math.max(handler.length - 2, 0) // include namedArguments, so, - 2
 
     if (args.length !== requiredArguments) {
       throw new Error(`參數數量不正確。該指令需要 ${requiredArguments} 個參數，僅傳入 ${args.length} 個。`)
