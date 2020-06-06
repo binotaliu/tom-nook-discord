@@ -35,10 +35,10 @@ module.exports = ({ app, addCommand }) =>
     // list members that need to be kicked
     const members = (await triggerMsg.guild.members.fetch()).array()
 
-    const expires = time ? dayjs(time) : dayjs().subtract(1, 'month');
+    const expires = time ? dayjs(time) : dayjs().subtract(1, 'month')
 
     if (!expires.isValid()) {
-      triggerMsg.channeld.send('輸入的時間無法識別（${time}），僅支援 Unix Timestamp 或是 ISO 8601 格式的時間。若留空則預設為一個月前。')
+      triggerMsg.channeld.send(`輸入的時間無法識別（${time}），僅支援 Unix Timestamp 或是 ISO 8601 格式的時間。若留空則預設為一個月前。`)
     }
 
     const kickList = members
