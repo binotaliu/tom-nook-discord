@@ -70,7 +70,7 @@ module.exports = ({ app, addCommand }) =>
         } catch (e) {
           triggerMsg.channel.send(`⚠️ 踢除 <@${m.id}> 失敗，${e}`)
         }
-      }, timeout+=1000)
+      }, timeout += 1000)
 
       timeout += 1000
     })

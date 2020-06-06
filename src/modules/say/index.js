@@ -9,7 +9,7 @@ module.exports = ({ app, addCommand }) =>
           .then((channel) => {
             if (triggerMsg.attachments.array().length) {
               channel.send(message, {
-                files: triggerMsg.attachments.array(),
+                files: triggerMsg.attachments.array()
               })
               return
             }
