@@ -8,7 +8,8 @@ const allowedRoles = [
   '683253104879206435', // 毫無反應
   '568701794855944223', // 村長
   '546265343459590155', // 島主
-  '575562641930452992' // 口袋
+  '575562641930452992', // 口袋
+  '683184334328299541' // たぬきち 開発
 ]
 
 const reasonDm = `踢除理由可能包含
@@ -30,11 +31,15 @@ const md5 = (data) => {
 }
 
 module.exports = ({ app, addCommand }) =>
-  addCommand('autokick', async (triggerMsg, _, confirmText = '') => {
+  addCommand('autokick', async (triggerMsg, { time }, confirmText = '') => {
     // list members that need to be kicked
     const members = (await triggerMsg.guild.members.fetch()).array()
 
-    const expires = dayjs().subtract(1, 'month')
+    const expires = time ? dayjs(time) : dayjs().subtract(1, 'month');
+
+    if (!expires.isValid()) {
+      triggerMsg.channeld.send('輸入的時間無法識別（${time}），僅支援 Unix Timestamp 或是 ISO 8601 格式的時間。若留空則預設為一個月前。')
+    }
 
     const kickList = members
       .filter((m) => m.joinedAt.valueOf() <= expires.valueOf())
@@ -55,6 +60,6 @@ module.exports = ({ app, addCommand }) =>
         m.send(reasonDm)
       })
     } else {
-      triggerMsg.channel.send(`若確定踢除請輸入: ${app.config.prefix}autokick ${hash}`)
+      triggerMsg.channel.send(`若確定踢除請輸入: ${app.config.prefix}autokick ${time ? `--time=${time} ` : ''}${hash}`)
     }
   })

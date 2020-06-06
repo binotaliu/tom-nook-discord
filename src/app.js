@@ -27,11 +27,11 @@ module.exports = class App {
     // binding for message handler
     this.client.on('message', (message) => {
       const text = `${message.content}`.trim()
-      if (text.slice(0, this.config.prefix.length) !== this.config.prefix) {
+      if (text.slice(0, this.config.prefix.length) === this.config.prefix) {
         try {
           this.commandHandler(message)
         } catch (e) {
-          message.reply(`${e}`)
+          message.channel.send(`${e.stack}`)
         }
       }
     })
@@ -88,22 +88,29 @@ module.exports = class App {
     const parsed = yargsParser(text)
 
     const prefixedCommand = parsed['_'].shift()
-    const command = parsed['_'][0].slice(this.config.prefix.length)
+    const command = prefixedCommand.slice(this.config.prefix.length)
 
     const args = parsed['_']
 
-    const namedArguments = Object.assign({}, Object
-      .entries(parsed)
-      .filter((k, ) => k !== '_')
-      .map(([k, v]) => ({[k]: v})))
+    const namedArguments = Object
+      .assign(
+        {},
+        ...Object
+          .entries(parsed)
+          .filter((k, ) => k !== '_')
+          .map(([k, v]) => ({[k]: v}))
+      )
 
     if (!this.commands[command]) {
       message.reply(`不存在的指令: ${command}`)
       return false
     }
 
-    if (args.length !== handler.length - 1) {
-      throw new Error(`參數數量不正確。該指令需要 ${handler.length - 1} 個參數，僅傳入 ${args.length} 個。`)
+    const handler = this.commands[command]
+    const requiredArguments = Math.min(handler.length - 2, 0) // include namedArguments, so, - 2
+
+    if (args.length !== requiredArguments) {
+      throw new Error(`參數數量不正確。該指令需要 ${requiredArguments} 個參數，僅傳入 ${args.length} 個。`)
     }
 
     return handler(message, namedArguments, ...args)
