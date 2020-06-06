@@ -1,6 +1,7 @@
-const cron = require('node-cron')
 const Discord = require('discord.js')
 const fsPromises = require('fs').promises
+const cron = require('node-cron')
+const yargsParser = require('yargs-parser')
 
 const DataBag = require('./data-bag')
 const Resolver = require('./resolver')
@@ -84,34 +85,28 @@ module.exports = class App {
 
     // parse command
     const text = `${message.content}`.trim()
-    const [prefixedCommand, ...rawArguments] = text.split(' ')
+    const parsed = yargsParser(text)
 
-    const command = prefixedCommand.slice(this.config.prefix.length)
+    const prefixedCommand = parsed['_'].shift()
+    const command = parsed['_'][0].slice(this.config.prefix.length)
+
+    const arguments = parsed['_']
+    const namedArguments = {
+      ...Object
+      .entries(parsed)
+      .filter((k, ) => k !== '_')
+      .map(([k, v]) => ({[k]: v}))
+    }
 
     if (!this.commands[command]) {
       message.reply(`不存在的指令: ${command}`)
       return false
     }
 
-    const handler = this.commands[command]
-    const argumentsCount = handler.length - 1
-
-    const splitedArguments = rawArguments.map(i => i.trim()).filter(i => i)
-    const parsedArguments = []
-
-    for (const i in splitedArguments) {
-      if (argumentsCount && i + 1 >= argumentsCount) {
-        parsedArguments.push(splitedArguments.slice(i).join(' '))
-        break
-      }
-
-      parsedArguments.push(splitedArguments[i])
+    if (arguments.length !== handler.length - 1) {
+      throw new Error(`參數數量不正確。該指令需要 ${handler.length - 1} 個參數，僅傳入 ${arguments.length} 個。`)
     }
 
-    if (parsedArguments.length !== argumentsCount) {
-      throw new Error(`Arguments count does not match. Required ${argumentsCount}, given ${parsedArguments.length}`)
-    }
-
-    return handler(message, ...parsedArguments)
+    return handler(message, namedArguments, ...parsedArguments)
   }
 }
