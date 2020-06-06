@@ -54,8 +54,15 @@ module.exports = ({ app, addCommand }) =>
     const hash = `${md5(kickList.map(m => m.id).join('\t'))}`
 
     // if confirm text given, check hash and perform kick
-    if (confirmText === hash) {
-      kickList.forEach(m => {
+    if (confirmText !== hash) {
+      triggerMsg.channel.send(`若確定踢除請輸入: ${app.config.prefix}autokick ${time ? `--time=${time} ` : ''}${hash}`)
+      return
+    }
+
+    let timeout = 1000
+
+    kickList.forEach(m => {
+      setTimeout(() => {
         try {
           m.kick('未設定符合規定的暱稱')
           m.send(reasonDm)
@@ -63,8 +70,8 @@ module.exports = ({ app, addCommand }) =>
         } catch (e) {
           triggerMsg.channel.send(`⚠️ 踢除 <@${m.id}> 失敗，${e}`)
         }
-      })
-    } else {
-      triggerMsg.channel.send(`若確定踢除請輸入: ${app.config.prefix}autokick ${time ? `--time=${time} ` : ''}${hash}`)
-    }
+      }, timeout+=1000)
+
+      timeout += 1000
+    })
   })
