@@ -1,4 +1,4 @@
-const getName = (message) => {
+const getName = (sender, message) => {
   if (message.guild) {
     return `#${message.channel.name}`
   }
@@ -30,7 +30,7 @@ module.exports = ({ app, addListener }) =>
     const sender = message.author
 
     const author = {
-      name: getName(message),
+      name: getName(sender, message),
       icon_url: message.author.avatar ? `https://cdn.discordapp.com/avatars/${sender.id}/${sender.avatar}.png` : sender.defaultAvatarURL,
       url: `https://discordapp.com/users/${sender.id}`
     }
