@@ -7,7 +7,7 @@ const DataBag = require('./data-bag')
 const Resolver = require('./resolver')
 
 const stripQuotes = (str) => {
-  if (str.length <= 1) {
+  if (typeof str !== 'string' || str.length <= 1) {
     return str
   }
 
