@@ -87,18 +87,18 @@ module.exports = class App {
     const text = `${message.content}`.trim()
     const parsed = yargsParser(text)
 
-    const prefixedCommand = parsed['_'].shift()
+    const prefixedCommand = parsed._.shift()
     const command = prefixedCommand.slice(this.config.prefix.length)
 
-    const args = parsed['_']
+    const args = parsed._
 
     const namedArguments = Object
       .assign(
         {},
         ...Object
           .entries(parsed)
-          .filter((k, ) => k !== '_')
-          .map(([k, v]) => ({[k]: v}))
+          .filter((k) => k !== '_')
+          .map(([k, v]) => ({ [k]: v }))
       )
 
     if (!this.commands[command]) {
