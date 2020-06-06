@@ -90,7 +90,7 @@ module.exports = class App {
     const prefixedCommand = parsed['_'].shift()
     const command = parsed['_'][0].slice(this.config.prefix.length)
 
-    const arguments = parsed['_']
+    const args = parsed['_']
 
     const namedArguments = Object.assign({}, Object
       .entries(parsed)
@@ -102,10 +102,10 @@ module.exports = class App {
       return false
     }
 
-    if (arguments.length !== handler.length - 1) {
-      throw new Error(`參數數量不正確。該指令需要 ${handler.length - 1} 個參數，僅傳入 ${arguments.length} 個。`)
+    if (args.length !== handler.length - 1) {
+      throw new Error(`參數數量不正確。該指令需要 ${handler.length - 1} 個參數，僅傳入 ${args.length} 個。`)
     }
 
-    return handler(message, namedArguments, ...parsedArguments)
+    return handler(message, namedArguments, ...args)
   }
 }
