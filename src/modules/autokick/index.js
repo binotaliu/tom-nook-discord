@@ -56,8 +56,13 @@ module.exports = ({ app, addCommand }) =>
     // if confirm text given, check hash and perform kick
     if (confirmText === hash) {
       kickList.forEach(m => {
-        m.kick('未設定符合規定的暱稱')
-        m.send(reasonDm)
+        try {
+          m.kick('未設定符合規定的暱稱')
+          m.send(reasonDm)
+          triggerMsg.channel.send(`已踢除 <@${m.id}>`)
+        } catch (e) {
+          triggerMsg.channel.send(`⚠️ 踢除 <@${m.id}> 失敗，${e}`)
+        }
       })
     } else {
       triggerMsg.channel.send(`若確定踢除請輸入: ${app.config.prefix}autokick ${time ? `--time=${time} ` : ''}${hash}`)
