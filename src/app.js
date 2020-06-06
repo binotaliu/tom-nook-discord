@@ -91,12 +91,11 @@ module.exports = class App {
     const command = parsed['_'][0].slice(this.config.prefix.length)
 
     const arguments = parsed['_']
-    const namedArguments = {
-      ...Object
+
+    const namedArguments = Object.assign({}, Object
       .entries(parsed)
       .filter((k, ) => k !== '_')
-      .map(([k, v]) => ({[k]: v}))
-    }
+      .map(([k, v]) => ({[k]: v})))
 
     if (!this.commands[command]) {
       message.reply(`不存在的指令: ${command}`)
