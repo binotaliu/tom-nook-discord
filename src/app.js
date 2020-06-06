@@ -6,6 +6,23 @@ const yargsParser = require('yargs-parser')
 const DataBag = require('./data-bag')
 const Resolver = require('./resolver')
 
+const stripQuotes = (str) => {
+  if (str.length <= 1) {
+    return str
+  }
+
+  const firstChar = str.charAt(0)
+  const lastChar = str.charAt(-1)
+
+  // if not surrounded by quotes
+  if (firstChar !== lastChar || (firstChar !== '"' && firstChar !== "'")) {
+    return str
+  }
+
+  // strip quotes
+  return str.slice(1, -1)
+}
+
 const loginAndReady = (app) =>
   new Promise((resolve) => {
     app.client.login(`Bot ${app.config.token}`)
@@ -90,7 +107,7 @@ module.exports = class App {
     const prefixedCommand = parsed._.shift()
     const command = prefixedCommand.slice(this.config.prefix.length)
 
-    const args = parsed._
+    const args = parsed._.map(i => stripQuotes(i))
 
     const namedArguments = Object
       .assign(
@@ -98,7 +115,7 @@ module.exports = class App {
         ...Object
           .entries(parsed)
           .filter((k) => k !== '_')
-          .map(([k, v]) => ({ [k]: v }))
+          .map(([k, v]) => ({ [k]: stripQuotes(v) }))
       )
 
     if (!this.commands[command]) {
