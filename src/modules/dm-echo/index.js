@@ -1,7 +1,23 @@
+const getName = (message) => {
+  if (message.guild) {
+    return `#${message.channel.name}`
+  }
+
+  const recipient = message.channel.recipient
+  return `${sender.tag}${sender.id === recipient.id ? '' : ` ➤ ${recipient.tag}`}`
+}
+
+const getReplyCommand = (prefix, message) => {
+  if (message.guild) {
+    return `${prefix}say <#${message.channel.id}>`
+  }
+
+  return `${prefix}say <#${message.author.id}>`
+}
+
 module.exports = ({ app, addListener }) =>
   addListener('message', (message) => {
-    // don't forward messages in guild  (, which means only forward dm)
-    if (message.guild) {
+    if (message.guild && !message.content.match(RegExp(`<@.${app.client.user.id}>`))) {
       return
     }
 
@@ -12,10 +28,9 @@ module.exports = ({ app, addListener }) =>
     const color = isSelf ? 9807270 : 15105570
 
     const sender = message.author
-    const recipient = message.channel.recipient
 
     const author = {
-      name: `${sender.tag}${sender.id === recipient.id ? '' : ` ➤ ${recipient.tag}`}`,
+      name: getName(message),
       icon_url: message.author.avatar ? `https://cdn.discordapp.com/avatars/${sender.id}/${sender.avatar}.png` : sender.defaultAvatarURL,
       url: `https://discordapp.com/users/${sender.id}`
     }
@@ -39,5 +54,5 @@ module.exports = ({ app, addListener }) =>
       })))
     }
 
-    app.hooks.inbox.send({ embeds, content: isSelf ? '' : `^say <@${message.author.id}>` })
+    app.hooks.inbox.send({ embeds, content: isSelf ? '' : getReplyCommand(app.config.prefix, message) })
   })
