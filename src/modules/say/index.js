@@ -7,6 +7,12 @@ module.exports = ({ app, addCommand }) =>
           .resolver
           .channel(ch)
           .then((channel) => {
+            if (triggerMsg.attachments.array().length) {
+              channel.send(message, {
+                files: triggerMsg.attachments.array(),
+              })
+              return
+            }
             channel.send(message)
           })
           .catch((e) => {
