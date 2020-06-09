@@ -1,6 +1,6 @@
 const getName = (sender, message) => {
   if (message.guild) {
-    return `#${message.channel.name}`
+    return `${sender.tag} @ #${message.channel.name}`
   }
 
   const recipient = message.channel.recipient
