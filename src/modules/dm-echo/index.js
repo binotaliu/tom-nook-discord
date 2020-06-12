@@ -12,7 +12,7 @@ const getReplyCommand = (prefix, message) => {
     return `${prefix}say <#${message.channel.id}>`
   }
 
-  return `${prefix}say <#${message.author.id}>`
+  return `${prefix}say <@${message.author.id}>`
 }
 
 module.exports = ({ app, addListener }) =>
