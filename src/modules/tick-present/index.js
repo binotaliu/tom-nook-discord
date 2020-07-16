@@ -8,7 +8,7 @@ module.exports = ({ app, addJob }) => [
       .filter(({ date }) => (date === today.format('YYYY/M/D') || date === today.format('M/D')))
     const todayBirthdays = app.dataBag.birthdays[today.format('M/D')] || []
 
-    const nickname = `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}`
+    const nickname = todayEvents.length ? `${today.format('M/D')} ${todayEvents.map(i => i.message).join('/')}` : '狸克'
     const activities = [
       ...todayEvents.map((e) => e.isFullDay ? `[整天] ${e.message}` : `[${e.startTime}~${e.endTime}] ${e.message}`),
       ...todayBirthdays.map(b => `🎂 ${b} 生日快樂！`)
