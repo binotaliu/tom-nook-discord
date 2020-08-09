@@ -64,8 +64,8 @@ module.exports = ({ app, addCommand }) =>
     kickList.forEach(m => {
       setTimeout(() => {
         try {
-          m.kick('未設定符合規定的暱稱')
           m.send(reasonDm)
+          m.kick('未設定符合規定的暱稱')
           triggerMsg.channel.send(`已踢除 <@${m.id}>`)
         } catch (e) {
           triggerMsg.channel.send(`⚠️ 踢除 <@${m.id}> 失敗，${e}`)
