@@ -1,34 +1,29 @@
 const axios = require('axios')
 
-const fetchPage = async (pageTitle) =>
-  (await axios.get(`https://acnh.tw/api.php?action=parse&formatversion=2&page=${pageTitle}&format=json&prop=wikitext`))
-    .data
-
 module.exports = class DataBag {
   constructor () {
+    this.lastUpdated = null
     this.events = []
     this.birthdays = {}
+    this.meta = {}
   }
 
-  async updateAll () {
-    return Promise.all([
-      this.updateEvents(),
-      this.updateBirthdays()
-    ])
+  async updateAll (force = false) {
+    const { data } = await axios.get('https://api.github.com/gists/df6d076c03b2121ddae5079335bbd572')
+    this.meta = data
+
+    if (data.updated_at === this.lastUpdated) {
+      return
+    }
+
+    this.lastUpdated = data.updated_at
+
+    this.events = this.parseEvents(data.files['Bot:NH_Schedules.wiki'].content)
+    this.birthdays = this.parseBirthdays(data.files['Bot:NH_Birthdays.wiki'].content)
   }
 
-  async updateEvents () {
-    this.events = await this.fetchEvents()
-  }
-
-  async updateBirthdays () {
-    this.birthdays = await this.fetchBirthdays()
-  }
-
-  async fetchEvents () {
-    return (await fetchPage('Bot:NH_Schedules'))
-      .parse
-      .wikitext
+  async parseEvents (data) {
+    return data
       .replace(/<!--[\w\W]+?-->/g, '')
       .split('\n')
       .filter((line) => line.match(/^\s*\*.+?-.+$/))
@@ -60,12 +55,10 @@ module.exports = class DataBag {
       })
   }
 
-  async fetchBirthdays () {
+  async parseBirthdays (data) {
     return Object
       .assign({},
-        ...((await fetchPage('Bot:NH_Birthdays'))
-          .parse
-          .wikitext
+        ...data
           .replace(/<!--[\w\W]+?-->/g, '')
           .split('\n')
           .filter((line) => line.match(/^\s*\*\s*.+/))
@@ -73,7 +66,7 @@ module.exports = class DataBag {
           .map(line => line.split('-', 2).map(i => i.trim()))
           .map(([date, villagers]) => ({
             [date]: villagers.split(',')
-          })))
+          }))
       )
   }
 }
