@@ -22,7 +22,7 @@ module.exports = class DataBag {
     this.birthdays = this.parseBirthdays(data.files['Bot:NH_Birthdays.wiki'].content)
   }
 
-  async parseEvents (data) {
+  parseEvents (data) {
     return data
       .replace(/<!--[\w\W]+?-->/g, '')
       .split('\n')
@@ -55,7 +55,7 @@ module.exports = class DataBag {
       })
   }
 
-  async parseBirthdays (data) {
+  parseBirthdays (data) {
     return Object
       .assign({},
         ...data
