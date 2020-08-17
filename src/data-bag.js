@@ -1,7 +1,9 @@
 const axios = require('axios')
 
 module.exports = class DataBag {
-  constructor () {
+  constructor (app) {
+    this.app = app
+
     this.lastUpdated = null
     this.events = []
     this.birthdays = {}
@@ -9,7 +11,10 @@ module.exports = class DataBag {
   }
 
   async updateAll (force = false) {
-    const { data } = await axios.get('https://api.github.com/gists/df6d076c03b2121ddae5079335bbd572')
+    const { data } = await axios
+      .get('https://api.github.com/gists/df6d076c03b2121ddae5079335bbd572', {
+        headers: { Authorization: `token ${this.app.config.github}` }
+      })
     this.meta = data
 
     if (data.updated_at === this.lastUpdated) {

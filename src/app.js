@@ -57,7 +57,7 @@ module.exports = class App {
     this.hooks = Object.assign({}, ...Object.entries((this.config.webhooks || {}))
       .map(([channel, { id, token }]) => ({ [channel]: new Discord.WebhookClient(id, token) })))
 
-    this.dataBag = new DataBag()
+    this.dataBag = new DataBag(this)
     this.resolver = new Resolver(this.client)
 
     this.modules = {}
