@@ -6,7 +6,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "dayjs": "^1.8.33",
-    "discord.js": "^12.2.0",
+    "discord.js": "^12.3.1",
     "limiter": "^1.1.5",
     "node-cron": "^2.0.3",
     "yargs-parser": "^19.0.1"
