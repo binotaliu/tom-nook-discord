@@ -1,3 +1,3 @@
 module.exports = ({ app, addJob }) => [
-  addJob('0,30 * * * * *', () => app.dataBag.updateAll())
+  addJob('0 0 * * * *', () => app.dataBag.updateAll())
 ]
