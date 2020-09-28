@@ -8,6 +8,6 @@ module.exports = ({ app, addJob }) => [
 
     const days = Math.ceil((Date.now() - epoch) / 86400000) + 1
 
-    channel.setName(`還債人生 Day ${days}`)
+    channel.setName(`島嶼人生 Day ${days}`)
   })
 ]
