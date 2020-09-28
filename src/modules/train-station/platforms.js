@@ -36,30 +36,6 @@ const platforms = [
     number: 6,
     emoji: '6️⃣',
     conductor_role: '694825709558038549'
-  },
-  {
-    id: '691057408440533093',
-    number: 7,
-    emoji: '7️⃣',
-    conductor_role: '694825838931214389'
-  },
-  {
-    id: '697781747995246642',
-    number: 8,
-    emoji: '8️⃣',
-    conductor_role: '697782085167087636'
-  },
-  {
-    id: '697781684346683462',
-    number: 9,
-    emoji: '9️⃣',
-    conductor_role: '697782123339448320'
-  },
-  {
-    id: '697781809320165457',
-    number: 10,
-    emoji: '🔟',
-    conductor_role: '697782147380936715'
   }
 ]
 
