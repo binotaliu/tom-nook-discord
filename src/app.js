@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 const fsPromises = require('fs').promises
 const cron = require('node-cron')
 const yargsParser = require('yargs-parser')
+const path = require('path')
 
 const DataBag = require('./data-bag')
 const Resolver = require('./resolver')
@@ -68,7 +69,7 @@ module.exports = class App {
     await Promise.all([this.dataBag.updateAll(), loginAndReady(this)])
 
     const allowedModules = (process.env.NOOK_MODULES || '').split(',').filter(i => i.length)
-    const modules = (await fsPromises.readdir(`${__dirname}/modules`))
+    const modules = (await fsPromises.readdir(path.join(__dirname, 'modules')))
       .filter(i => !(/^\.+/i.exec(i)))
 
     modules
