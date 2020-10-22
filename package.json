@@ -12,7 +12,7 @@
     "yargs-parser": "^20.2.3"
   },
   "devDependencies": {
-    "standard": "^14.3.4"
+    "standard": "^15.0.0"
   },
   "scripts": {
     "test": "standard"
