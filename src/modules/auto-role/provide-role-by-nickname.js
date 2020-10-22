@@ -12,9 +12,6 @@ module.exports = (member) => {
   }
 
   switch (true) {
-    case /^.+?(SW\D|)0000\D?0000\D?0000?$/.test(nickname): // Invalid
-    default:
-      return false
     case /^.+?(SW-|)(\d{4}\D?){2}\d{4}$/.test(nickname): // Switch NH
       member.roles.add(ROLES.nh)
       return true
@@ -24,5 +21,8 @@ module.exports = (member) => {
     case /^.+?(\d{4}\D?){2}\d{4}$/.test(nickname): // 3DS NL
       member.roles.add(ROLES.nl)
       return true
+    case /^.+?(SW\D|)0000\D?0000\D?0000?$/.test(nickname): // Invalid
+    default:
+      return false
   }
 }
