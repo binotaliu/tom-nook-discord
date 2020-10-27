@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "dayjs": "^1.9.4",
     "discord.js": "^12.4.1",
     "limiter": "^1.1.5",
