@@ -62,9 +62,9 @@ module.exports = ({ app, addCommand }) =>
     let timeout = 1000
 
     kickList.forEach(m => {
-      setTimeout(() => {
+      setTimeout(async () => {
         try {
-          m.send(reasonDm)
+          await m.send(reasonDm)
           m.kick('未設定符合規定的暱稱')
           triggerMsg.channel.send(`已踢除 <@${m.id}>`)
         } catch (e) {
