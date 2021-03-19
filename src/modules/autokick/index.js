@@ -1,7 +1,7 @@
 const { createHash } = require('crypto')
-
-const dayjs = require('dayjs')
 const { splitMessage } = require('discord.js')
+
+const dayjs = require('../../dayjs')
 
 const allowedRoles = [
   '546269790537252866', // NPC
@@ -45,7 +45,7 @@ module.exports = ({ app, addCommand }) =>
       .filter((m) => m.joinedAt.valueOf() <= expires.valueOf())
       .filter((m) => allowedRoles.filter(i => m.roles.cache.has(i)).length <= 0)
 
-    const listMessages = splitMessage(`踢除名單如下：\n${kickList.map(i => `<@${i.id}>`).join('\n')}\n設定期限: ${expires.format('YYYY-MM-DD HH:mm:ss')}`)
+    const listMessages = splitMessage(`踢除名單如下：\n${kickList.map(i => `<@${i.id}>`).join('\n')}\n設定期限: ${expires.tz().format('YYYY-MM-DD HH:mm:ss')}`)
     for (const msg of listMessages) {
       triggerMsg.channel.send(msg)
     }

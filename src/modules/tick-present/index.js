@@ -1,8 +1,8 @@
-const dayjs = require('dayjs')
+const dayjs = require('../../dayjs')
 
 module.exports = ({ app, addJob }) => [
   addJob('*/3 * * * * *', () => {
-    const today = dayjs()
+    const today = dayjs().tz()
 
     const todayEvents = app.dataBag.events
       .filter(({ date }) => (date === today.format('YYYY/M/D') || date === today.format('M/D')))
