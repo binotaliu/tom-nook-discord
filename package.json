@@ -9,7 +9,7 @@
     "discord.js": "^13.5.0",
     "limiter": "^2.1.0",
     "node-cron": "^3.0.0",
-    "yargs-parser": "^21.0.0"
+    "yargs-parser": "^21.0.1"
   },
   "devDependencies": {
     "standard": "^16.0.4"
